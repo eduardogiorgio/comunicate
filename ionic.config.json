@@ -1,0 +1,7 @@
+{
+  "name": "comunicate",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

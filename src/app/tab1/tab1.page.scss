@@ -1,0 +1,14 @@
+.welcome-card ion-img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+
+  // color que cambia la imagen apretada
+  .selected-action {
+    background-color: #ccc;
+  } 
+
+  .selected-action ion-card-content h2{
+    color: black ;
+    font-weight: bold;
+  }

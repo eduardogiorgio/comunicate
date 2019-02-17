@@ -1,0 +1,84 @@
+<!-- ver de no utilizar tabs y tuilizar directmente segments ?-->
+<ion-header> 
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      
+      <ion-title>Comunicate</ion-title>
+      <ion-buttons *ngIf="settings.editMode" slot="end">
+          <ion-button (click)="pushSettingsPage()">
+            <ion-icon slot="icon-only" name="settings"></ion-icon>
+          </ion-button>
+          <ion-button (click)="lock()" >
+            <ion-icon slot="icon-only" name="unlock"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+      <ion-buttons *ngIf="!settings.editMode" slot="end">
+          <ion-button (click)="unLock()">
+            <ion-icon slot="icon-only" name="lock"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  
+    <ion-toolbar>
+      <!-- fuerza a que este seleccionado para modificar-->
+        <ion-segment  scrollable [(ngModel)]="categorySelected"  (ionChange)="categoryChanged()" (click)="loadLatestSelected('category')">
+            <ion-segment-button *ngFor="let category of categories; index as i; first as isFirst"  [value]="category">
+              <ion-icon *ngIf="settings.ShowCategories == 0 || settings.ShowCategories == 2" [name]="category.icon"></ion-icon>
+              {{settings.ShowCategories == 1 || settings.ShowCategories == 2 ? category.name  : ''}}
+            </ion-segment-button>
+            <ion-button *ngIf="settings.editMode" (click)="addCategory()">
+                <ion-icon  slot="icon-only" name="add-circle"></ion-icon>
+                Add Category
+            </ion-button>
+          </ion-segment>
+
+      <ion-segment scrollable [(ngModel)]="groupSelected" *ngIf="settings.ShowGroup && categorySelected" (ionChange)="groupChanged()" (click)="loadLatestSelected('group')" > <!-- porque puede ser que por alguna razon no se cargo para que no estalle -->
+        <ion-segment-button *ngFor="let group of groups; index as i; first as isFirst" [value]="group">
+          <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
+          {{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}
+        </ion-segment-button>
+        <ion-button *ngIf="settings.editMode" (click)="addGroup()">
+            <ion-icon name="add-circle"></ion-icon>
+            Add Group
+          </ion-button>
+      </ion-segment>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    
+
+  <!-- grilla de las acciones -->
+  <!-- ver que escrolle horizontalmente y  -->
+  <ion-grid>
+      <ion-row *ngIf="categorySelected">
+        <ion-col *ngFor="let action of actions | actionsByGroup:actionGroups; index as i; first as isFirst" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
+            <ion-card class="welcome-card" [class.selected-action]="action == actionSelected" (click)="actionChanged(action)">
+                <ion-img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';"></ion-img>
+                <ion-card-header>
+                  <ion-card-title text-center>{{action.name}}</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+        </ion-col>
+        <ion-col *ngIf="settings.editMode" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
+           <ion-card class="welcome-card" (click)="addAction()">
+              <ion-img src="./assets/images/camera-icon.png"></ion-img>
+              <ion-card-header>
+                <ion-card-title text-center>Create new action</ion-card-title>
+              </ion-card-header>
+            </ion-card>
+         </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- llevar a hacerlo generico sea con ngif en los otros o viendo el ultimo tipo que selecciono-->
+    <!-- o usar una interfaz que permita saber que selecciono en una list -->
+    <ion-fab *ngIf="settings.editMode && latestSelected !='' " vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="primary" (click)="editItem()">
+        <ion-icon name="create"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="danger" (click)="deleteItem()">
+          <ion-icon name="trash"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+  </ion-content>  

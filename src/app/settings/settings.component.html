@@ -1,0 +1,74 @@
+<ion-header>
+    <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+                <!-- not working-->
+                <!--<ion-back-button></ion-back-button>-->
+                <ion-button (click)="dismiss()">
+                    <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+          <ion-title>Configuraciones</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+        <ion-label>Seguridad</ion-label>
+        <ion-select [(ngModel)]="settings.pattern" (ngModelChange)="saveSettings()" ok-text="Aceptar" cancel-text="Cancelar">
+          <ion-select-option value="0">Ninguno</ion-select-option>
+          <ion-select-option value="1">Patron</ion-select-option>
+          <ion-select-option value="2">Texto</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Historial de seleccionadas</ion-label>
+        <ion-toggle [(ngModel)]="settings.seletedHistory" (ngModelChange)="saveSettings()"></ion-toggle>
+      </ion-item>
+    <ion-item>
+        <ion-label>Acciones por fila</ion-label>
+        <ion-select [(ngModel)]="settings.columnsPerRow" (ngModelChange)="saveSettings()"  ok-text="Aceptar" cancel-text="Cancelar">
+          <ion-select-option [value]="false">Automatico</ion-select-option>
+          <ion-select-option value="12">1</ion-select-option>
+          <ion-select-option value="6">2</ion-select-option>
+          <ion-select-option value="4">3</ion-select-option>
+          <ion-select-option value="3">4</ion-select-option>
+          <ion-select-option value="2.2">5</ion-select-option>
+          <ion-select-option value="2">6</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Mostrar Categorias</ion-label>
+        <ion-select [(ngModel)]="settings.ShowCategories" (ngModelChange)="saveSettings()" ok-text="Aceptar" cancel-text="Cancelar">
+          <ion-select-option value="0">Iconos</ion-select-option>
+          <ion-select-option value="1">Texto</ion-select-option>
+          <ion-select-option value="2">Texto y Iconos</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Mostrar grupos</ion-label>
+        <ion-select [(ngModel)]="settings.ShowGroup" (ngModelChange)="saveSettings()" value="brown" ok-text="Aceptar" cancel-text="Cancelar">
+            <ion-select-option value="null">Ninguno</ion-select-option>
+            <ion-select-option value="0">Iconos</ion-select-option>
+            <ion-select-option value="1">Texto</ion-select-option>
+            <ion-select-option value="2">Texto y Iconos</ion-select-option>>
+        </ion-select>
+    </ion-item>
+    <!-- mostrar si y solo si no esta el no mostrar-->
+    <ion-item>
+        <ion-label>Mostrar Categorias</ion-label>
+        <ion-toggle [(ngModel)]="settings.showGroupAll" (ngModelChange)="saveSettings()"></ion-toggle>
+    </ion-item>
+    <ion-item>
+        <ion-label>Velocidad de lectura</ion-label>
+        <ion-range color="primary" min="0" max="1" step="0.05"  [(ngModel)]="settings.rateSpeek" (ngModelChange)="saveSettings()" pin="true"></ion-range>
+    </ion-item>
+    <ion-item>
+        <ion-label>Idioma</ion-label>
+        <ion-select [(ngModel)]="settings.localeSpeek" (ngModelChange)="saveSettings()" value="brown" ok-text="Aceptar" cancel-text="Cancelar">
+            <!-- hacer dinamico-->
+            <ion-select-option value="es-AR">Español Argentina</ion-select-option>
+        </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>

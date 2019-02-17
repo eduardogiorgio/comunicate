@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <!-- not working-->
+            <!--<ion-back-button></ion-back-button>-->
+            <ion-button (click)="dismiss()">
+              <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+            <ion-button (click)="initializateValidators()">
+              <ion-icon slot="icon-only" name="refresh"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Categoria</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm" [formGroup]="categoryform">
+    <ion-item>
+      <ion-label>Nombre</ion-label>
+      <ion-input formControlName="name" type="text" placeholder="nombre categoria" autofocus clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Icono</ion-label>
+      <ion-icon [name]="categoryform.value.icon" item-left></ion-icon>
+      <ion-select formControlName="icon" ok-text="Aceptar" cancel-text="Cancelar">
+        <ion-select-option *ngFor="let icon of icons"  [value]="icon"><ion-icon [name]="icon" item-left></ion-icon>{{icon}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Orden</ion-label>
+      <ion-icon [name]="categoryform.value.order" item-left></ion-icon>
+      <ion-select formControlName="order" ok-text="Aceptar" cancel-text="Cancelar">
+        <ion-select-option [selected]="order === i" *ngFor="let cat of categories;index as i;"  [value]="i"><ion-icon [name]="cat.icon" item-left></ion-icon>{{cat.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div text-center>
+      <ion-button size="large" [disabled]="!categoryForm.valid" type="submit">Aceptar</ion-button>
+      <ion-button size="large" (click)="dismiss()" >Cancelar</ion-button>
+    </div>
+  </form>
+</ion-content>
