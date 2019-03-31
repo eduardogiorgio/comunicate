@@ -24,20 +24,20 @@
     <ion-item>
       <ion-label>Icono</ion-label>
       <ion-icon [name]="groupform.value.icon" item-left></ion-icon>
-      <ion-select formControlName="icon" ok-text="Aceptar" cancel-text="Cancelar">
+      <ion-select formControlName="icon" interface="popover">
         <ion-select-option *ngFor="let icon of icons"  [value]="icon"><ion-icon [name]="icon" item-left></ion-icon>{{icon}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Acciones</ion-label>
-        <ion-select  multiple="true" formControlName="actions" ok-text="Aceptar" cancel-text="Cancelar">
+        <ion-select  multiple="true" formControlName="actions" interface="popover">
           <ion-select-option *ngFor="let action of actions"  [value]="action">{{action.name}}</ion-select-option>
         </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Orden</ion-label>
       <ion-icon [name]="groupform.value.order" item-left></ion-icon>
-      <ion-select formControlName="order" ok-text="Aceptar" cancel-text="Cancelar">
+      <ion-select formControlName="order" interface="popover">
         <ion-select-option [selected]="order === i" *ngFor="let gro of groups;index as i;"  [value]="i"><ion-icon [name]="gro.icon" item-left></ion-icon>{{gro.name}}</ion-select-option>
       </ion-select>
     </ion-item>
