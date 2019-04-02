@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category';
@@ -8,7 +8,7 @@ import { ActionService } from '../services/action.service';
 import { Action } from '../models/action';
 
 import { Storage } from '@ionic/storage';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { ActionEditComponent } from '../action-edit/action-edit.component';
 import { GroupEditComponent } from '../group-edit/group-edit.component';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
@@ -19,6 +19,7 @@ import { SettingsService } from '../services/settings.service';
 import { ActionGroupService } from '../services/action-group.service';
 import { ActionGroup } from '../models/action-group';
 
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -28,7 +29,8 @@ export class Tab1Page implements OnInit {
  constructor(private route: ActivatedRoute, private tts: TextToSpeech, private categoryService: CategoryService,
              private groupService: GroupService, private actionGroupService: ActionGroupService,
              private actionService: ActionService, private settingsService: SettingsService,
-             private storage: Storage, private modalController: ModalController) {}
+             private storage: Storage, private modalController: ModalController,
+             private alertController: AlertController,public toastController: ToastController) {}
 
   settings: Settings;
   categories: Category[];
@@ -254,8 +256,70 @@ speechText(text: string) {
     this.settings.editMode = false;
     this.settingsService.saveSettings(this.settings);
    }
-   unLock() {
-      this.settings.editMode = true;
-      this.settingsService.saveSettings(this.settings);
+
+   unLock(){
+    this.settings.editMode = true;
+    this.settingsService.saveSettings(this.settings);
    }
+
+   checkAndUnLock() {
+      // validate
+      if(this.settings.pattern == 2){
+         this.unlockByText();
+
+      } else{
+        this.unLock();
+    }
+   }
+
+    async unlockByText() {
+      // crear la rgla
+      // un component distinto
+      //const alertController = document.querySelector('ion-alert-controller');
+      //await alertController.componentOnReady();
+    
+      const alert = await this.alertController.create({
+        header: 'Ingrese contraseña',
+        inputs: [
+          {
+            name: 'password',
+            type: 'text',
+            placeholder: 'Contraseña',
+            
+          }],
+          
+          buttons: [
+            {
+              text: 'Cancelar',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: () => {
+                console.log('Confirm Cancel: blah');
+              }
+            }, {
+              text: 'Desbloquear',
+              handler: (data) => {
+                if(this.settings.patternPassword == data.password ){
+                  this.unLock();
+                } else{
+                  this.presentToastErrorPassword();
+                }
+              }
+            }
+          ]
+      });
+      return await alert.present();
+    }
+
+    async presentToastErrorPassword() {
+      const toast = await this.toastController.create({
+        message: 'Contraseña incorrecta',
+        showCloseButton: true,
+        position: 'top',
+        closeButtonText: 'Done'
+      });
+      toast.present();
+    }
+   
+   
 }

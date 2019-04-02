@@ -1,6 +1,6 @@
 export class Settings {
     pattern: number; // enum
-    patternPassword: number; //
+    patternPassword: string; //
     seletedHistory: boolean;
     columnsPerRow: number;
     ShowCategories: number;

@@ -17,10 +17,14 @@
         <ion-label>Seguridad</ion-label>
         <ion-select [(ngModel)]="settings.pattern" (ngModelChange)="saveSettings()" interface="popover">
           <ion-select-option value="0">Ninguno</ion-select-option>
-          <ion-select-option value="1">Patron</ion-select-option>
+          <!--<ion-select-option value="1">Patron</ion-select-option>-->
           <ion-select-option value="2">Texto</ion-select-option>
         </ion-select>
     </ion-item>
+    <ion-item *ngIf="settings.pattern == 2">
+      <ion-label>Clave</ion-label>
+      <ion-input type="text" [(ngModel)]="settings.patternPassword" placeholder="Ingrese su clave" autofocus clearInput (ngModelChange)="saveSettings()"></ion-input>
+  </ion-item>
     <ion-item>
         <ion-label>Historial de seleccionadas</ion-label>
         <ion-toggle [(ngModel)]="settings.seletedHistory" (ngModelChange)="saveSettings()"></ion-toggle>

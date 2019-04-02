@@ -15,7 +15,7 @@
           </ion-button>
       </ion-buttons>
       <ion-buttons *ngIf="!settings.editMode" slot="end">
-          <ion-button (click)="unLock()">
+          <ion-button (click)="checkAndUnLock()">
             <ion-icon slot="icon-only" name="lock"></ion-icon>
           </ion-button>
       </ion-buttons>

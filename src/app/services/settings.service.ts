@@ -16,7 +16,8 @@ export class SettingsService {
   private getSettingsDefault() {
     const settginsDefault = new Settings();
 
-    settginsDefault.patternPassword = 0; // hacer enum
+    settginsDefault.pattern = 0;
+    settginsDefault.patternPassword = ""; // hacer enum
     settginsDefault.seletedHistory =  false;
     settginsDefault.columnsPerRow =  0; // 0 automatico
     settginsDefault.ShowCategories =  0; // hacer enum
