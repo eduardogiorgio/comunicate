@@ -18,6 +18,7 @@ import { Settings } from '../models/settings';
 import { SettingsService } from '../services/settings.service';
 import { ActionGroupService } from '../services/action-group.service';
 import { ActionGroup } from '../models/action-group';
+import { NoSelected } from '../models/no-selected';
 
 
 @Component({
@@ -38,12 +39,14 @@ export class Tab1Page implements OnInit {
   actions: Action[];
   actionGroups: ActionGroup[];
 
-  latestSelected: string;
+  latestSelected: Category | Group | Action | NoSelected;
   categorySelected: Category;
   groupSelected: Group;
   actionSelected: Action;
+  noSelected: NoSelected;
 
   ngOnInit(): void {
+    this.latestSelected = this.noSelected;
     this.getCategories();
     this.getSettings();
   }
@@ -162,8 +165,8 @@ async pushActionPage(action?: Action, categoryId?: number) {
 }
 
 categoryChanged() {
-  this.loadLatestSelected('category');
   if (this.categorySelected) {
+    this.latestSelected = this.categorySelected;
     this.groupSelected = null;
     this.actionGroups = null;
     this.getGroups(this.categorySelected.id);
@@ -172,57 +175,44 @@ categoryChanged() {
 }
 
 groupChanged() {
-  this.loadLatestSelected('group');
-  // obtener el datos de los groups.
-  this.actionGroups = this.actionGroupService.getActionByGroup(this.groupSelected.id);
+  // si los elimina no cambia nada
+  if (this.groupSelected) {
+    this.latestSelected =  this.groupSelected;
+    this.actionGroups = this.actionGroupService.getActionByGroup(this.groupSelected.id);
+  }
 }
 
 actionChanged(action: Action) {
   this.actionSelected = action;
-  this.loadLatestSelected('action');
+  this.latestSelected =  this.actionSelected;
   this.speechText(this.actionSelected.name);
 }
 
-// pattern staegy
-loadLatestSelected(latestSelected: string) {
-  this.latestSelected = latestSelected;
-}
 
 // ver de mejorar y hacer factory
 editItem() {
-  switch (this.latestSelected) {
-    case 'category':
-      this.editCategory();
-      break;
-    case 'group':
-      this.editGroup();
-      break;
-    case 'action':
-      this.editAction();
-      break;
-    default:
-      break;
+  console.log(this.latestSelected);
+  if(this.latestSelected === this.categorySelected){
+    this.editCategory();
+  } else if(this.latestSelected === this.groupSelected){
+    this.editGroup();
+  } else if(this.latestSelected === this.actionSelected){
+    this.editAction();
   }
+  
 }
 
 deleteItem() {
-  // check tipe latest
-  switch (this.latestSelected) {
-    case 'category':
-      this.deleteCategory();
-      break;
-      case 'group':
-      this.deleteGroup();
-      break;
-      case 'action':
-      this.deleteAction();
-      break;
-    default:
-      console.log('error'); // no deberia ocurrir por el ngif
-      break;
+  // comparo si el mismo seleccionado
+  if(this.latestSelected === this.categorySelected){
+    this.deleteCategory();
+  } else if(this.latestSelected === this.groupSelected){
+    this.deleteGroup();
+  } else if(this.latestSelected === this.actionSelected){
+    this.deleteAction();
   }
 
-  this.latestSelected = '';
+  this.latestSelected = this.noSelected;
 }
 
 

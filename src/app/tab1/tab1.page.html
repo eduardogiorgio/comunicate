@@ -23,7 +23,7 @@
   
     <ion-toolbar>
       <!-- fuerza a que este seleccionado para modificar-->
-        <ion-segment  scrollable [(ngModel)]="categorySelected"  (ionChange)="categoryChanged()" (click)="loadLatestSelected('category')">
+        <ion-segment  scrollable [(ngModel)]="categorySelected"  (ionChange)="categoryChanged()">
             <ion-segment-button *ngFor="let category of categories; index as i; first as isFirst"  [value]="category">
               <ion-icon *ngIf="settings.ShowCategories == 0 || settings.ShowCategories == 2" [name]="category.icon"></ion-icon>
               {{settings.ShowCategories == 1 || settings.ShowCategories == 2 ? category.name  : ''}}
@@ -34,7 +34,7 @@
             </ion-button>
           </ion-segment>
 
-      <ion-segment scrollable [(ngModel)]="groupSelected" *ngIf="settings.ShowGroup && categorySelected" (ionChange)="groupChanged()" (click)="loadLatestSelected('group')" > <!-- porque puede ser que por alguna razon no se cargo para que no estalle -->
+      <ion-segment scrollable [(ngModel)]="groupSelected" *ngIf="settings.ShowGroup && categorySelected" (ionChange)="groupChanged()"> <!-- porque puede ser que por alguna razon no se cargo para que no estalle -->
         <ion-segment-button *ngFor="let group of groups; index as i; first as isFirst" [value]="group">
           <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
           {{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}
@@ -73,8 +73,8 @@
     </ion-grid>
     <!-- llevar a hacerlo generico sea con ngif en los otros o viendo el ultimo tipo que selecciono-->
     <!-- o usar una interfaz que permita saber que selecciono en una list -->
-    <ion-fab *ngIf="settings.editMode && latestSelected !='' " vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button color="primary" (click)="editItem()">
+    <ion-fab *ngIf="settings.editMode && latestSelected != noSelected " vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="primary" (click)="editItem()" >
         <ion-icon name="create"></ion-icon>
       </ion-fab-button>
       <ion-fab-button color="danger" (click)="deleteItem()">
