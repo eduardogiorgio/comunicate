@@ -20,8 +20,8 @@ export class SettingsService {
     settginsDefault.patternPassword = ""; // hacer enum
     settginsDefault.seletedHistory =  false;
     settginsDefault.columnsPerRow =  0; // 0 automatico
-    settginsDefault.ShowCategories =  0; // hacer enum
-    settginsDefault.ShowGroup = 0; // hacer enum
+    settginsDefault.ShowCategories =  2; // hacer enum
+    settginsDefault.ShowGroup = 2; // hacer enum
     settginsDefault.showGroupAll =  false; // mostrar todos los grupos
 
     settginsDefault.rateSpeek =  0.80; // volumen 0 a 1 utilizar  slider

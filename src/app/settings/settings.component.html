@@ -16,9 +16,9 @@
     <ion-item>
         <ion-label>Seguridad</ion-label>
         <ion-select [(ngModel)]="settings.pattern" (ngModelChange)="saveSettings()" interface="popover">
-          <ion-select-option value="0">Ninguno</ion-select-option>
+          <ion-select-option [value]="0">Ninguno</ion-select-option>
           <!--<ion-select-option value="1">Patron</ion-select-option>-->
-          <ion-select-option value="2">Texto</ion-select-option>
+          <ion-select-option [value]="2">Texto</ion-select-option>
         </ion-select>
     </ion-item>
     <ion-item *ngIf="settings.pattern == 2">
@@ -32,30 +32,30 @@
     <ion-item>
         <ion-label>Acciones por fila</ion-label>
         <ion-select [(ngModel)]="settings.columnsPerRow" (ngModelChange)="saveSettings()" interface="popover">
-          <ion-select-option [value]="false">Automatico</ion-select-option>
-          <ion-select-option value="12">1</ion-select-option>
-          <ion-select-option value="6">2</ion-select-option>
-          <ion-select-option value="4">3</ion-select-option>
-          <ion-select-option value="3">4</ion-select-option>
-          <ion-select-option value="2.2">5</ion-select-option>
-          <ion-select-option value="2">6</ion-select-option>
+          <ion-select-option [value]="null">Automatico</ion-select-option>
+          <ion-select-option [value]="12">1</ion-select-option>
+          <ion-select-option [value]="6">2</ion-select-option>
+          <ion-select-option [value]="4">3</ion-select-option>
+          <ion-select-option [value]="3">4</ion-select-option>
+          <ion-select-option [value]="2.2">5</ion-select-option>
+          <ion-select-option [value]="2">6</ion-select-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Mostrar Categorias</ion-label>
         <ion-select [(ngModel)]="settings.ShowCategories" (ngModelChange)="saveSettings()" interface="popover">
-          <ion-select-option value="0">Iconos</ion-select-option>
-          <ion-select-option value="1">Texto</ion-select-option>
-          <ion-select-option value="2">Texto y Iconos</ion-select-option>
+          <ion-select-option [value]="0">Iconos</ion-select-option>
+          <ion-select-option [value]="1">Texto</ion-select-option>
+          <ion-select-option [value]="2">Texto y Iconos</ion-select-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Mostrar grupos</ion-label>
         <ion-select [(ngModel)]="settings.ShowGroup" (ngModelChange)="saveSettings()" interface="popover">
-            <ion-select-option value="null">Ninguno</ion-select-option>
-            <ion-select-option value="0">Iconos</ion-select-option>
-            <ion-select-option value="1">Texto</ion-select-option>
-            <ion-select-option value="2">Texto y Iconos</ion-select-option>>
+            <ion-select-option [value]="null">Ninguno</ion-select-option>
+            <ion-select-option [value]="0">Iconos</ion-select-option>
+            <ion-select-option [value]="1">Texto</ion-select-option>
+            <ion-select-option [value]="2">Texto y Iconos</ion-select-option>>
         </ion-select>
     </ion-item>
     <!-- mostrar si y solo si no esta el no mostrar-->
