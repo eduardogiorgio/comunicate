@@ -83,6 +83,8 @@ export class Tab1Page implements OnInit {
     const { data } = await modal.onDidDismiss();
     if (data) {
       this.getCategories();
+      this.categorySelected = this.categories.find( x => x.id == data.id);
+      this.categoryChanged();
     }
   }
 
@@ -125,6 +127,8 @@ export class Tab1Page implements OnInit {
     const { data } = await modal.onDidDismiss();
     if (data) {
       this.getGroups(this.categorySelected.id);
+      this.groupSelected = this.groups.find( x => x.id == data.id);
+      this.groupChanged();
     }
   }
 
@@ -161,6 +165,14 @@ async pushActionPage(action?: Action, categoryId?: number) {
   const { data } = await modal.onDidDismiss();
   if (data) {
     this.getActions(this.categorySelected.id);
+    // si no esta en la misma categoria
+    if(data.categoryId == this.categorySelected.id){
+      this.actionSelected = this.actions.find( x => x.id == data.id);
+      this.actionChanged(this.actionSelected);
+    } else if(data.id == this.actionSelected.id){ // si se edito y cambio de cateogira
+      this.actionSelected = null;
+      this.actionChanged(this.actionSelected);
+    }
   }
 }
 
