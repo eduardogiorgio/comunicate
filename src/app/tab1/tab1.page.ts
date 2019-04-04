@@ -171,7 +171,7 @@ async pushActionPage(action?: Action, categoryId?: number) {
       this.actionChanged(this.actionSelected);
     } else if(data.id == this.actionSelected.id){ // si se edito y cambio de cateogira
       this.actionSelected = null;
-      this.actionChanged(this.actionSelected);
+      this.latestSelected = NoSelected;
     }
   }
 }
