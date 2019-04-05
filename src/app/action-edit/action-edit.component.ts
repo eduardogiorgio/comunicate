@@ -203,6 +203,9 @@ export class ActionEditComponent implements OnInit {
     const value = this.actionform.get('category').value;
     this.getGroupsByCategory(value);
     this.getActionsByCategory(value);
+    
+    const actionFinal: Action = { id: 0, name: 'final', categoryId: value, path: '', sequence: this.actions.length };
+    this.actions.push(actionFinal);
   }
 
 }

@@ -14,7 +14,7 @@ export class ActionService {
 
   constructor(private storage: Storage) {}
 
-  loadActions() {
+  loadActions() : Action[] {
     const stringSettings = localStorage.getItem(this.ACTIONS);
     if (stringSettings) {
       const actions = JSON.parse(stringSettings) as Action[];
@@ -35,14 +35,18 @@ export class ActionService {
   save(action: Action, order: number) {
     const actions = this.loadActions();
     const i = actions.findIndex(x => x.id === action.id);
+    // funciona pero no se porque
+    var sumar = actions.findIndex(x => x.categoryId == action.categoryId); 
+    const posicion = order + sumar;
+    
     if (i < 0 ) {
-      actions.splice(order, 0, action);
+      actions.splice(posicion, 0, action);
     } else {
-      if (i ===  order) {
+      if (i ===  posicion) {
         actions[i] = action;
       } else {
         actions.splice(i, 1);
-        actions.splice(order, 0, action);
+        actions.splice(posicion, 0, action);
       }
     }
     localStorage.setItem(this.ACTIONS, JSON.stringify(actions));

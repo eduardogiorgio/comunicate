@@ -35,18 +35,17 @@ export class GroupService {
   save(group: Group, order: number) {
     const groups = this.loadGroups();
     const i = groups.findIndex(x => x.id === group.id);
-    if (i < 0 ) {
-      // groups.push(category);
-      groups.splice(order, 0, group);
-    } else {
-      // groups[i] = category;
+    var sumar = groups.findIndex(x => x.categoryId == group.categoryId); 
+    const posicion = order + sumar;
 
-      if (i ===  order) {
+    if (i < 0 ) {
+      groups.splice(posicion, 0, group);
+    } else {
+      if (i ===  posicion) {
         groups[i] = group;
       } else {
-        // lo remueve y lo pone en la nueva posicion
         groups.splice(i, 1);
-        groups.splice(order, 0, group);
+        groups.splice(posicion, 0, group);
       }
     }
     localStorage.setItem(this.GROUPS, JSON.stringify(groups));
