@@ -323,5 +323,33 @@ speechText(text: string) {
       toast.present();
     }
    
-   
+    //TODO: refactorizar
+    // si es el mismo 2 veces se deselecciona
+    unselectedGroupIfEquals(group){
+      console.log(this.groupSelected);
+      console.log(group);
+      if(group && this.groupSelected == group){
+        console.log("entro");
+        setTimeout(()=>{
+          this.groupSelected = null;
+          this.latestSelected = this.noSelected;
+          this.actionGroups = null; // no se porque le puse null pero es un pipe revisar despues
+           }, 100)
+      }
+    }
+
+    // si es el mismo 2 veces se deselecciona
+    unselectedCategoryIfEquals(category){
+      console.log(this.categorySelected);
+      console.log(category);
+      if(category && this.categorySelected == category){
+        console.log("entro");
+        setTimeout(()=>{
+          this.categorySelected = null;
+          this.latestSelected = this.noSelected;
+           }, 100)
+      }
+    }
+
+
 }
