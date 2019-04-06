@@ -24,7 +24,7 @@
     <ion-toolbar>
       <!-- fuerza a que este seleccionado para modificar-->
         <ion-segment  scrollable [(ngModel)]="categorySelected"  (ionChange)="categoryChanged()">
-            <ion-segment-button *ngFor="let category of categories" [class.latest-selected]="settings.editMode && category == latestSelected"  [value]="category" (click)="unselectedCategoryIfEquals(category)"> <!-- la ultima funcion es para que deseleccione si se toca devuelta-->
+            <ion-segment-button *ngFor="let category of categories" [class.latest-selected]="settings.editMode && category == latestSelected"  [value]="category" (click)="unselectedCategoryIfEquals(category)" (press)="editCategory(category)"> <!-- la ultima funcion es para que deseleccione si se toca devuelta-->
               <ion-icon *ngIf="settings.ShowCategories == 0 || settings.ShowCategories == 2" [name]="category.icon"></ion-icon>
               {{settings.ShowCategories == 1 || settings.ShowCategories == 2 ? category.name  : ''}}
             </ion-segment-button>
@@ -35,7 +35,7 @@
           </ion-segment>
 
       <ion-segment scrollable [(ngModel)]="groupSelected" *ngIf="settings.ShowGroup && categorySelected" (ionChange)="groupChanged()"> <!-- porque puede ser que por alguna razon no se cargo para que no estalle -->
-        <ion-segment-button *ngFor="let group of groups" [class.latest-selected]="settings.editMode && group == latestSelected" [value]="group" (click)="unselectedGroupIfEquals(group)"> <!-- la ultima funcion es para que deseleccione si se toca devuelta-->
+        <ion-segment-button *ngFor="let group of groups" [class.latest-selected]="settings.editMode && group == latestSelected" [value]="group" (click)="unselectedGroupIfEquals(group)" (press)="editGroup(group)"> <!-- la ultima funcion es para que deseleccione si se toca devuelta-->
           <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
           {{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}
         </ion-segment-button>
@@ -54,7 +54,7 @@
   <ion-grid>
       <ion-row *ngIf="categorySelected">
         <ion-col *ngFor="let action of actions | actionsByGroup:actionGroups; index as i; first as isFirst" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
-            <ion-card class="welcome-card" [class.selected-action]="action == actionSelected" [class.latest-selected]="settings.editMode && action == latestSelected" (click)="actionChanged(action)">
+            <ion-card class="welcome-card" [class.selected-action]="action == actionSelected" [class.latest-selected]="settings.editMode && action == latestSelected" (click)="actionChanged(action)" (press)="editAction(action)">
                 <ion-img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';"></ion-img>
                 <ion-card-header>
                   <ion-card-title text-center>{{action.name}}</ion-card-title>

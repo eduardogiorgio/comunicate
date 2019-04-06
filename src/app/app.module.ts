@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -33,6 +33,9 @@ import { ActionsByGroupPipe } from './pipes/actions-pipe';
 import { SettingsComponent } from './settings/settings.component';
 import { SettingsService } from './services/settings.service';
 
+//hammer events
+import { IonicGestureConfig } from './gestures/ionic-gesture-config';
+
 @NgModule({
   declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent],
   entryComponents: [ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent],
@@ -50,7 +53,12 @@ import { SettingsService } from './services/settings.service';
     Crop,
     TextToSpeech,
     WebView,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: IonicGestureConfig
+    },
+    
   ],
   bootstrap: [AppComponent]
 })
