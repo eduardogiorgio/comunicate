@@ -3,6 +3,7 @@ import { Category } from '../models/category';
 import { CategoryService } from '../services/category.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { ICONS } from '../mocks/mock.icons';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class CategoryEditComponent implements OnInit {
   categoryform: FormGroup;
   @Input() category?: Category;
 
-  icons = ['add-circle', 'airplane'];
+  icons = ICONS;
   constructor(private modalController: ModalController, private categoryService: CategoryService) { }
 
   ngOnInit() {
