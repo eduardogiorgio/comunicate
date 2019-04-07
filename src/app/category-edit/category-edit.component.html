@@ -24,6 +24,7 @@
     <ion-item>
       <ion-label>Icono</ion-label>
       <ion-icon [name]="categoryform.value.icon" item-left></ion-icon>
+      <!-- no puedo usar esta por cuestiones de performance interface="popover"-->
       <ion-select formControlName="icon">
         <ion-select-option *ngFor="let icon of icons"  [value]="icon"><ion-icon [name]="icon" item-left></ion-icon>{{icon}}</ion-select-option>
       </ion-select>
