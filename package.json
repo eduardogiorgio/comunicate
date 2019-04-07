@@ -46,6 +46,7 @@
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-sqlite-storage": "2.6.0",
     "core-js": "^2.5.4",
+    "hammerjs": "^2.0.8",
     "ionic": "^4.9.0",
     "rxjs": "~6.3.3",
     "web": "0.0.2",

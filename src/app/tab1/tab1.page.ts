@@ -59,7 +59,9 @@ export class Tab1Page implements OnInit {
       this.pushCategoryPage(null);
   }
 
-  editCategory() {
+  editCategory(category?: Category) {
+    if(!this.settings.editMode) return;
+    this.categorySelected = category ?  category : this.categorySelected;
     this.pushCategoryPage(this.categorySelected);
   }
 
@@ -102,7 +104,9 @@ export class Tab1Page implements OnInit {
     this.pushGroupPage(null, this.categorySelected.id);
   }
 
-  editGroup() {
+  editGroup(group?: Group) {
+    if(!this.settings.editMode) return;
+    this.groupSelected = group ?  group : this.groupSelected;
     this.pushGroupPage(this.groupSelected, this.categorySelected.id);
   }
 
@@ -141,7 +145,9 @@ addAction() {
   this.pushActionPage(null, this.categorySelected.id);
 }
 
-editAction() {
+editAction(action?: Action) {
+  if(!this.settings.editMode) return;
+  this.actionSelected = action ?  action : this.actionSelected;
   this.pushActionPage(this.actionSelected, this.categorySelected.id);
 }
 
@@ -350,6 +356,4 @@ speechText(text: string) {
            }, 100)
       }
     }
-
-
 }

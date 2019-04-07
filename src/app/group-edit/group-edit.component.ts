@@ -6,6 +6,7 @@ import { ModalController } from '@ionic/angular';
 import { ActionService } from '../services/action.service';
 import { Action } from '../models/action';
 import { ActionGroupService } from '../services/action-group.service';
+import { ICONS } from '../mocks/mock.icons';
 
 @Component({
   selector: 'app-group-edit',
@@ -22,7 +23,7 @@ export class GroupEditComponent implements OnInit {
   @Input() group?: Group;
   @Input() categoryId?: number;
 
-  icons = ['add-circle', 'airplane'];
+  icons = ICONS;
   constructor(private modalController: ModalController,
               private groupService: GroupService,
               private actionGroupService: ActionGroupService,
