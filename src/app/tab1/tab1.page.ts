@@ -356,6 +356,4 @@ speechText(text: string) {
            }, 100)
       }
     }
-
-
 }
