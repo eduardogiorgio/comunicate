@@ -50,18 +50,16 @@
         </ion-select>
     </ion-item>
     <ion-item>
+        <ion-label>Mostrar Grupos</ion-label>
+        <ion-toggle [(ngModel)]="settings.showGroupAll" (ngModelChange)="saveSettings()"></ion-toggle>
+    </ion-item>
+    <ion-item *ngIf="settings.showGroupAll">
         <ion-label>Mostrar grupos</ion-label>
         <ion-select [(ngModel)]="settings.ShowGroup" (ngModelChange)="saveSettings()" interface="popover">
-            <ion-select-option [value]="null">Ninguno</ion-select-option>
             <ion-select-option [value]="0">Iconos</ion-select-option>
             <ion-select-option [value]="1">Texto</ion-select-option>
             <ion-select-option [value]="2">Texto y Iconos</ion-select-option>>
         </ion-select>
-    </ion-item>
-    <!-- mostrar si y solo si no esta el no mostrar-->
-    <ion-item>
-        <ion-label>Mostrar Categorias</ion-label>
-        <ion-toggle [(ngModel)]="settings.showGroupAll" (ngModelChange)="saveSettings()"></ion-toggle>
     </ion-item>
     <ion-item>
         <ion-label>Velocidad de lectura</ion-label>
