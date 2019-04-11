@@ -17,5 +17,10 @@
       "es2018",
       "dom"
     ]
-  }
+  },
+  // temporally solution beta
+  "include": [
+    "src",
+    "node_modules/@ionic-super-tabs/core/dist/types/interface.d.ts" 
+  ]
 }

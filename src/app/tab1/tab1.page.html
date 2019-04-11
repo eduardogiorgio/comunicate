@@ -20,29 +20,37 @@
           </ion-button>
       </ion-buttons>
     </ion-toolbar>
-  
-    <ion-toolbar>
-      <!-- fuerza a que este seleccionado para modificar-->
-        <ion-segment  scrollable [(ngModel)]="categorySelected"  (ionChange)="categoryChanged()">
-            <ion-segment-button *ngFor="let category of categories" [class.latest-selected]="settings.editMode && category == latestSelected"  [value]="category" (click)="unselectedCategoryIfEquals(category)" (press)="editCategory(category)" > <!-- la ultima funcion es para que deseleccione si se toca devuelta-->
-              <ion-icon *ngIf="settings.ShowCategories == 0 || settings.ShowCategories == 2" [name]="category.icon"></ion-icon>
-              {{settings.ShowCategories == 1 || settings.ShowCategories == 2 ? category.name  : ''}}
-            </ion-segment-button>
-          </ion-segment>
-
-      <ion-segment scrollable [(ngModel)]="groupSelected" *ngIf="settings.showGroupAll && categorySelected" (ionChange)="groupChanged()"> <!-- porque puede ser que por alguna razon no se cargo para que no estalle -->
-        <ion-segment-button *ngFor="let group of groups" [class.latest-selected]="settings.editMode && group == latestSelected" [value]="group" (click)="unselectedGroupIfEquals(group)" (press)="editGroup(group)"> <!-- la ultima funcion es para que deseleccione si se toca devuelta-->
-          <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
-          {{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
 </ion-header>
 <ion-content>
-    
 
-  <!-- grilla de las acciones -->
-  <!-- ver que escrolle horizontalmente y  -->
+  <!-- [(ngModel)]="categorySelected" -->
+    <super-tabs (activeTabIndexChange)="categoryChangedIndex($event)"><!-- <super-tabs [config]="config" (tabChange)="onTabChange($event)"> -->
+        <super-tabs-container>
+          <super-tab *ngFor="let category of categories">
+            <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings"></app-category-detail>  <!--  -->
+              <!--{{category.name}}-->
+          </super-tab>
+        </super-tabs-container>
+        
+        <super-tabs-toolbar> <!-- scrollable -->
+          <!--<super-tab-button (click)="onTabClick($event)">-->
+          <super-tab-button *ngFor="let category of categories"  (click)="unselectedItem(category)" (press)="editItem(category)">
+              <ion-icon *ngIf="settings.ShowCategories != 1"  [name]="category.icon"></ion-icon><!--☺-->
+              <ion-label *ngIf="settings.ShowCategories != 0">{{category.name}}</ion-label>
+          </super-tab-button>
+        </super-tabs-toolbar>
+      </super-tabs>
+  
+
+
+  <!--
+    <ion-toolbar>
+          <ion-segment  scrollable [(ngModel)]="categorySelected"  (ionChange)="categoryChanged()">
+              <ion-segment-button *ngFor="let category of categories" [class.latest-selected]="settings.editMode && category == latestSelected"  [value]="category" (click)="unselectedCategoryIfEquals(category)" (press)="editCategory(category)" > 
+                <ion-icon *ngIf="settings.ShowCategories == 0 || settings.ShowCategories == 2" [name]="category.icon"></ion-icon>
+                {{settings.ShowCategories == 1 || settings.ShowCategories == 2 ? category.name  : ''}}
+              </ion-segment-button>
+            </ion-segment>
   <ion-grid>
       <ion-row *ngIf="categorySelected">
         <ion-col *ngFor="let action of actions | actionsByGroup:actionGroups; index as i; first as isFirst" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
@@ -55,9 +63,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <!-- llevar a hacerlo generico sea con ngif en los otros o viendo el ultimo tipo que selecciono-->
-    <!-- o usar una interfaz que permita saber que selecciono en una list -->
-
+  -->
     <ion-fab *ngIf="settings.editMode" vertical="bottom" horizontal="end" class="ion-fab-extra-margin">
       <ion-fab-button>
           <ion-icon name="add"></ion-icon>
@@ -76,10 +82,10 @@
     </ion-fab>
 
     <ion-fab *ngIf="settings.editMode" vertical="bottom" horizontal="end">
-      <ion-fab-button color="secondary" (click)="editItem()" [disabled]="latestSelected == noSelected">
+      <ion-fab-button color="secondary" (click)="editItem(latestSelected)" [disabled]="latestSelected == noSelected">
         <ion-icon name="create"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button color="danger" (click)="deleteItem()" [disabled]="latestSelected == noSelected">
+      <ion-fab-button color="danger" (click)="deleteItem(latestSelected)" [disabled]="latestSelected == noSelected">
           <ion-icon name="trash"></ion-icon>
         </ion-fab-button>
     </ion-fab>

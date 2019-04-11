@@ -1,0 +1,27 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-segment scrollable [(ngModel)]="groupSelected" *ngIf="settings.showGroupAll && categorySelected" (ionChange)="groupChanged()"> 
+        <ion-segment-button *ngFor="let group of groups" [class.latest-selected]="settings.editMode && group == latestSelected" [value]="group" (click)="unselectedGroupIfEquals(group)" (press)="editGroup(group)">
+          <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
+          {{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>    
+</ion-header>
+
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let action of actions | actionsByGroup:actionGroups; index as i; first as isFirst" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
+              <ion-card class="welcome-card" [class.selected-action]="action == actionSelected" [class.latest-selected]="settings.editMode && action == latestSelected" (click)="actionChanged(action)" (press)="editAction(action)">
+                  <ion-img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';"></ion-img>
+                  <ion-card-header>
+                    <ion-card-title text-center>{{action.name}}</ion-card-title>
+                  </ion-card-header>
+                </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+</ion-content>

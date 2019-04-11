@@ -35,14 +35,12 @@ export class Tab1Page implements OnInit {
 
   settings: Settings;
   categories: Category[];
-  groups: Group[];
-  actions: Action[];
-  actionGroups: ActionGroup[];
+  //groups: Group[];
+  //actions: Action[];
+  //actionGroups: ActionGroup[];
 
   latestSelected: Category | Group | Action | NoSelected;
   categorySelected: Category;
-  groupSelected: Group;
-  actionSelected: Action;
   noSelected: NoSelected;
 
   ngOnInit(): void {
@@ -59,20 +57,6 @@ export class Tab1Page implements OnInit {
       this.pushCategoryPage(null);
   }
 
-  editCategory(category?: Category) {
-    if(!this.settings.editMode) return;
-    this.categorySelected = category ?  category : this.categorySelected;
-    this.pushCategoryPage(this.categorySelected);
-  }
-
-  deleteCategory() {
-    this.categoryService.delete(this.categorySelected);
-    this.groupService.deleteGroupsByCategory(this.categorySelected.id);
-    this.actionService.deleteActionsByCategory(this.categorySelected.id);
-    this.categorySelected = null;
-    this.getCategories();
-  }
-
    async pushCategoryPage(category?: Category) {
      const modal = await this.modalController.create({
       component: CategoryEditComponent,
@@ -86,7 +70,9 @@ export class Tab1Page implements OnInit {
     if (data) {
       this.getCategories();
       this.categorySelected = this.categories.find( x => x.id == data.id);
-      this.categoryChanged();
+      //this.categoryChanged(this.categorySelected);
+      // TODO: ver de hacer que refresque mejor por el cambio de id
+      this.categories = this.categories; // detect reflection 
     }
   }
 
@@ -95,27 +81,8 @@ export class Tab1Page implements OnInit {
   }
 
 
-  // groups
-  getGroups(idCategory: number) {
-    this.groups = this.groupService.loadGroupsByCategory(this.categorySelected.id);
-  }
-
   addGroup() {
     this.pushGroupPage(null, this.categorySelected.id);
-  }
-
-  editGroup(group?: Group) {
-    if(!this.settings.editMode) return;
-    this.groupSelected = group ?  group : this.groupSelected;
-    this.pushGroupPage(this.groupSelected, this.categorySelected.id);
-  }
-
-  deleteGroup() {
-    this.groupService.delete(this.groupSelected);
-    this.actionGroupService.saveGroupWithActions(this.groupSelected, []);
-    this.groupSelected = null;
-    this.actionGroups = null;
-    this.getGroups(this.categorySelected.id);
   }
 
  async pushGroupPage(group?: Group, categoryId?: number) {
@@ -130,33 +97,24 @@ export class Tab1Page implements OnInit {
     await modal.present();
     const { data } = await modal.onDidDismiss();
     if (data) {
-      this.getGroups(this.categorySelected.id);
-      this.groupSelected = this.groups.find( x => x.id == data.id);
-      this.groupChanged();
+      //TODO: call refresh or not
+      //this.getGroups(this.categorySelected.id);
+      //this.getGroups(this.categorySelected.id);
+      //this.groupSelected = this.groups.find( x => x.id == data.id);
+      //this.groupChanged();
     }
   }
-
-// actions
-getActions(idCategory: number) {
-  this.actions = this.actionService.loadActionsByCategory(this.categorySelected.id);
-}
 
 addAction() {
   this.pushActionPage(null, this.categorySelected.id);
 }
-
-editAction(action?: Action) {
-  if(!this.settings.editMode) return;
-  this.actionSelected = action ?  action : this.actionSelected;
-  this.pushActionPage(this.actionSelected, this.categorySelected.id);
-}
-
+/*
 deleteAction() {
-  this.actionService.delete(this.actionSelected);
-  this.actionGroupService.saveActionWithGroups(this.actionSelected, []);
+  
   this.actionSelected = null;
-  this.getActions(this.categorySelected.id);
+  //this.getActions(this.categorySelected.id);
 }
+*/
 
 async pushActionPage(action?: Action, categoryId?: number) {
  const modal = await this.modalController.create({
@@ -170,6 +128,7 @@ async pushActionPage(action?: Action, categoryId?: number) {
   await modal.present();
   const { data } = await modal.onDidDismiss();
   if (data) {
+    /*
     this.getActions(this.categorySelected.id);
     // si no esta en la misma categoria
     if(data.categoryId == this.categorySelected.id){
@@ -179,60 +138,75 @@ async pushActionPage(action?: Action, categoryId?: number) {
       this.actionSelected = null;
       this.latestSelected = NoSelected;
     }
+    */
   }
 }
 
-categoryChanged() {
-  if (this.categorySelected) {
-    this.latestSelected = this.categorySelected;
-    this.groupSelected = null;
-    this.actionGroups = null;
-    this.getGroups(this.categorySelected.id);
-    this.getActions(this.categorySelected.id);
+categoryChangedIndex(index: any){
+  this.categorySelected = this.categories[index.detail];
+  this.latestSelected = this.categorySelected;
+}
+
+latestSelectedChange(latestSelected: Category | Group | Action | NoSelected){
+  if(this.latestSelected == latestSelected){
+    this.latestSelected = this.noSelected
+  } else{
+    this.latestSelected = latestSelected
   }
 }
 
-groupChanged() {
-  // si los elimina no cambia nada
-  if (this.groupSelected) {
-    this.latestSelected =  this.groupSelected;
-    this.actionGroups = this.actionGroupService.getActionByGroup(this.groupSelected.id);
-  }
-}
 
-actionChanged(action: Action) {
-  this.actionSelected = action;
-  this.latestSelected =  this.actionSelected;
-  this.speechText(this.actionSelected.name);
+detectedType (latestSelected : Category | Group | Action | NoSelected) : Category | Group | Action | NoSelected {
+  if(!('id' in latestSelected))
+    return new NoSelected();
+  if(!('categoryId' in latestSelected))
+    return new Category();
+  if(!('path' in latestSelected))
+    return new Group();
+  if(!('icon' in latestSelected))
+    return new Action();
 }
-
 
 // ver de mejorar y hacer factory
-editItem() {
-  console.log(this.latestSelected);
-  if(this.latestSelected === this.categorySelected){
-    this.editCategory();
-  } else if(this.latestSelected === this.groupSelected){
-    this.editGroup();
-  } else if(this.latestSelected === this.actionSelected){
-    this.editAction();
+editItem(item : Category | Group | Action | NoSelected) {
+
+  if(!this.settings.editMode) return;
+  const type = this.detectedType(item);
+  
+  if(type instanceof Category){
+    this.pushCategoryPage(item as Category);
+  } else if(type instanceof Group){
+    this.pushGroupPage(item as Group, this.categorySelected.id);
+  } else if(type instanceof Action){
+    this.pushActionPage(item as Action, this.categorySelected.id);
   }
   
 }
 
-deleteItem() {
-  // comparo si el mismo seleccionado
-  if(this.latestSelected === this.categorySelected){
-    this.deleteCategory();
-  } else if(this.latestSelected === this.groupSelected){
-    this.deleteGroup();
-  } else if(this.latestSelected === this.actionSelected){
-    this.deleteAction();
+deleteItem(item : Category | Group | Action | NoSelected) {
+  const type = this.detectedType(item);
+  
+  if(type instanceof Category){
+    this.categoryService.delete(item as Category);
+    this.groupService.deleteGroupsByCategory((item as Category).id);
+    this.actionService.deleteActionsByCategory((item as Category).id);
+    this.getCategories();
+  } else if(type instanceof Group){
+    this.groupService.delete(item as Group);
+    this.actionGroupService.saveGroupWithActions(item as Group, []);
+  } else if(type instanceof Action){
+    this.actionService.delete(item as Action);
+    this.actionGroupService.saveActionWithGroups(item as Action, []);
   }
-
   this.latestSelected = this.noSelected;
 }
 
+unselectedItem(item : Category | Group | Action | NoSelected){
+  if(!this.settings.editMode) return;
+  setTimeout(()=>{
+    this.latestSelected = this.latestSelected == item ? this.noSelected : item;
+  },100);
+}
 
 speechText(text: string) {
   const ttsOptions: TTSOptions = {
@@ -328,32 +302,5 @@ speechText(text: string) {
       });
       toast.present();
     }
-   
-    //TODO: refactorizar
-    // si es el mismo 2 veces se deselecciona
-    unselectedGroupIfEquals(group){
-      console.log(this.groupSelected);
-      console.log(group);
-      if(group && this.groupSelected == group){
-        console.log("entro");
-        setTimeout(()=>{
-          this.groupSelected = null;
-          this.latestSelected = this.noSelected;
-          this.actionGroups = null; // no se porque le puse null pero es un pipe revisar despues
-           }, 100)
-      }
-    }
-
-    // si es el mismo 2 veces se deselecciona
-    unselectedCategoryIfEquals(category){
-      console.log(this.categorySelected);
-      console.log(category);
-      if(category && this.categorySelected == category){
-        console.log("entro");
-        setTimeout(()=>{
-          this.categorySelected = null;
-          this.latestSelected = this.noSelected;
-           }, 100)
-      }
-    }
+    
 }
