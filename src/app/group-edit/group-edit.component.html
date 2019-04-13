@@ -21,14 +21,10 @@
       <ion-label>Nombre</ion-label>
       <ion-input formControlName="name" type="text" placeholder="nombre categoria" autofocus clearInput></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label>Icono</ion-label>
-      <ion-icon [name]="groupform.value.icon" item-left></ion-icon>
-      <!-- no puedo usar esta por cuestiones de performance interface="popover"-->
-      <ion-select formControlName="icon">
-        <ion-select-option *ngFor="let icon of icons"  [value]="icon"><ion-icon [name]="icon" item-left></ion-icon>{{icon}}</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <ion-item (click)="pushIconPage()">
+        <ion-label>Icono</ion-label>
+        <ion-icon [name]="groupform.value.icon" item-left></ion-icon>
+      </ion-item>
     <ion-item>
         <ion-label>Acciones</ion-label>
         <ion-select  multiple="true" formControlName="actions" interface="popover">

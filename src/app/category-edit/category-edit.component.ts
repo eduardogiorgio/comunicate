@@ -4,6 +4,7 @@ import { CategoryService } from '../services/category.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { ICONS } from '../mocks/mock.icons';
+import { SelectIconComponent } from '../select-icon/select-icon.component';
 
 
 @Component({
@@ -50,6 +51,22 @@ export class CategoryEditComponent implements OnInit {
     }
     this.addFirstFinalOrden();
   }
+
+  
+  async pushIconPage() {
+    const modal = await this.modalController.create({
+     component: SelectIconComponent,
+     //componentProps: {
+     //  'category': category,
+     //}
+
+   });
+   await modal.present();
+   const { data } = await modal.onDidDismiss();
+   if (data) {
+     this.categoryform.controls.icon.setValue(data);
+   }
+ }
 
   addFirstFinalOrden() {
 

@@ -23,6 +23,8 @@ import { ActionService } from './services/action.service';
 import { ActionEditComponent } from './action-edit/action-edit.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
+import { SelectIconComponent } from './select-icon/select-icon.component';
+
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
 import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
@@ -39,8 +41,8 @@ import { IonicGestureConfig } from './gestures/ionic-gesture-config';
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 @NgModule({
-  declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent],
-  entryComponents: [ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent],
+  declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent],
+  entryComponents: [ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent],
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule,SuperTabsModule.forRoot()],
   providers: [
     StatusBar,

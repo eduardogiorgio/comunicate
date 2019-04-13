@@ -150,7 +150,7 @@ detectedType (latestSelected : Category | Group | Action | NoSelected) : Categor
 
 // ver de mejorar y hacer factory
 editItem(item : Category | Group | Action | NoSelected) {
-
+  this.latestSelected = item;
   if(!this.settings.editMode) return;
   const type = this.detectedType(item);
   
