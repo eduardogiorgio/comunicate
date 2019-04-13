@@ -24,10 +24,10 @@
 <ion-content>
 
   <!-- [(ngModel)]="categorySelected" this.categories[this.tabs.activeTabIndex].id --> 
-    <super-tabs><!-- (activeTabIndexChange)="categoryChangedIndex($event)" --><!-- <super-tabs [config]="config" (tabChange)="onTabChange($event)"> -->
+    <super-tabs (activeTabIndexChange)="categoryChangedIndex($event)"><!-- (activeTabIndexChange)="categoryChangedIndex($event)" --><!-- <super-tabs [config]="config" (tabChange)="onTabChange($event)"> -->
         <super-tabs-toolbar> <!-- scrollable -->
           <!--<super-tab-button (click)="onTabClick($event)">-->
-          <super-tab-button *ngFor="let category of categories"  (click)="unselectedItem(category)" (press)="editItem(category)">
+          <super-tab-button *ngFor="let category of categories"  (click)="unselectedItem(category)" (press)="editItem(category)" [class.latest-selected]="settings.editMode && category == latestSelected">
               <ion-icon *ngIf="settings.ShowCategories != 1"  [name]="category.icon"></ion-icon><!--☺-->
               <ion-label *ngIf="settings.ShowCategories != 0">{{category.name}}</ion-label>
           </super-tab-button>

@@ -66,11 +66,14 @@ export class CategoryDetailComponent implements OnInit {
     },100);
   }
   
-  groupChanged() {
+  groupChanged(group) {
     // si los elimina no cambia nada
-    if (this.groupSelected) {
-      this.latestSelected =  this.groupSelected;
-      this.actionGroups = this.actionGroupService.getActionByGroup(this.groupSelected.id);
+    if (group) {
+      if(group == this.latestSelected){
+        this.getGroups();
+      } else{
+        this.actionGroups = this.actionGroupService.getActionByGroup(this.groupSelected.id);
+      }
     }
   }
 

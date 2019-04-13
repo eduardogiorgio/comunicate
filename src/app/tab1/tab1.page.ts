@@ -42,7 +42,6 @@ export class Tab1Page implements OnInit {
   noSelected: NoSelected;
 
   // get current tab
-  
   @ViewChild(SuperTabs) tabs: SuperTabs;
 
   ngOnInit(): void {
@@ -115,18 +114,15 @@ async pushActionPage(action?: Action, categoryId?: number) {
   }
 }
 
-/*
+// si esta seleccionado cuando cmabia de cateoria selecciona otro
 categoryChangedIndex(index: any){
-  console.log(index);
-  this.categorySelected = this.categories[index.detail];
-  
-  //TODO: problem autoselect
+   //TODO: problem autoselect
   // change detected if type equals category
   if(this.detectedType(this.latestSelected) instanceof Category){
-    this.latestSelected = this.categorySelected;
+    this.latestSelected = this.categories[index.detail];
   }
 }
-*/
+
 
 latestSelectedChange(latestSelected: Category | Group | Action | NoSelected){
   if(this.latestSelected == latestSelected){
@@ -138,6 +134,8 @@ latestSelectedChange(latestSelected: Category | Group | Action | NoSelected){
 
 
 detectedType (latestSelected : Category | Group | Action | NoSelected) : Category | Group | Action | NoSelected {
+  if(!latestSelected)
+    return new NoSelected();
   if(!('id' in latestSelected))
     return new NoSelected();
   if(!('categoryId' in latestSelected))

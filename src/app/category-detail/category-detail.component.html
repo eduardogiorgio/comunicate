@@ -1,8 +1,8 @@
 
 <ion-header>
   <ion-toolbar *ngIf="settings.showGroupAll">
-    <ion-segment  [(ngModel)]="groupSelected" (ionChange)="groupChanged()"> <!-- scrollable -->
-        <ion-segment-button *ngFor="let group of groups" [class.latest-selected]="settings.editMode && group == latestSelected" [value]="group" (click)="unselectedItem(group)" (press)="editItem(group)">
+    <ion-segment  [(ngModel)]="groupSelected"> <!-- scrollable -->
+        <ion-segment-button *ngFor="let group of groups" [class.latest-selected]="settings.editMode && group == latestSelected" [value]="group" (click)="groupChanged(group);unselectedItem(group)" (press)="editItem(group)">
           <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
           {{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}
         </ion-segment-button>
