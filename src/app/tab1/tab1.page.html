@@ -27,7 +27,7 @@
     <super-tabs><!-- (activeTabIndexChange)="categoryChangedIndex($event)" --><!-- <super-tabs [config]="config" (tabChange)="onTabChange($event)"> -->
         <super-tabs-container>
           <super-tab *ngFor="let category of categories">
-            <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings"></app-category-detail>  <!--  -->
+            <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>  <!--  -->
               <!--{{category.name}}-->
           </super-tab>
         </super-tabs-container>

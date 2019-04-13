@@ -2,7 +2,7 @@
 <ion-header>
   <ion-toolbar *ngIf="settings.showGroupAll">
     <ion-segment  [(ngModel)]="groupSelected" (ionChange)="groupChanged()"> <!-- scrollable -->
-        <ion-segment-button *ngFor="let group of groups" [class.latest-selected]="settings.editMode && group == latestSelected" [value]="group" (click)="unselectedItem(group)" (press)="editGroup(group)">
+        <ion-segment-button *ngFor="let group of groups" [class.latest-selected]="settings.editMode && group == latestSelected" [value]="group" (click)="unselectedItem(group)" (press)="editItem(group)">
           <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
           {{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}
         </ion-segment-button>
@@ -15,7 +15,7 @@
     <ion-grid>
         <ion-row>
           <ion-col *ngFor="let action of actions | actionsByGroup:actionGroups; index as i; first as isFirst" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
-              <ion-card class="welcome-card" [class.selected-action]="action == actionSelected" [class.latest-selected]="settings.editMode && action == latestSelected" (click)="unselectedItem(action)" (press)="editAction(action)">
+              <ion-card class="welcome-card" [class.selected-action]="action == actionSelected" [class.latest-selected]="settings.editMode && action == latestSelected" (click)="unselectedItem(action)" (press)="editItem(action)">
                   <ion-img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';"></ion-img>
                   <ion-card-header>
                     <ion-card-title text-center>{{action.name}}</ion-card-title>

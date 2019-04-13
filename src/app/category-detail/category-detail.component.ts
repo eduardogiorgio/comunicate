@@ -27,7 +27,7 @@ export class CategoryDetailComponent implements OnInit {
   @Input() latestSelected: Category | Group | Action | NoSelected;
   @Output() latestSelectedChange = new EventEmitter<Category | Group | Action | NoSelected>();
   // falta un inputoutput para el seleccionado lo puedan compartir edicion y borrar
-
+  @Output() callEditing = new EventEmitter<Category | Group | Action | NoSelected>();
   
   
   groupSelected: Group;
@@ -72,5 +72,9 @@ export class CategoryDetailComponent implements OnInit {
       this.latestSelected =  this.groupSelected;
       this.actionGroups = this.actionGroupService.getActionByGroup(this.groupSelected.id);
     }
+  }
+
+  editItem(item : Category | Group | Action){
+    this.callEditing.emit(item);
   }
 }
