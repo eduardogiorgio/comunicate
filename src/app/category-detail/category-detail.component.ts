@@ -30,9 +30,10 @@ export class CategoryDetailComponent implements OnInit {
 
   
   
-
+  groupSelected: Group;
   groups: Group[];
   actions: Action[];
+  
   actionGroups: ActionGroup[];
 
   constructor(private groupService: GroupService, 
@@ -54,6 +55,22 @@ export class CategoryDetailComponent implements OnInit {
     this.actions = this.actionService.loadActionsByCategory(this.category.id);
   }
   
-
+  // ver que el latest selected este en las configuraciones
+  //TODO: VER herencia para no repetir las acciones
+  unselectedItem(item : Category | Group | Action | NoSelected){
+    console.log(item);
+    if(!this.settings.editMode) return;
+    setTimeout(()=>{
+      this.latestSelected = this.latestSelected == item ? this.noSelected : item;
+      this.latestSelectedChange.emit(this.latestSelected);
+    },100);
+  }
   
+  groupChanged() {
+    // si los elimina no cambia nada
+    if (this.groupSelected) {
+      this.latestSelected =  this.groupSelected;
+      this.actionGroups = this.actionGroupService.getActionByGroup(this.groupSelected.id);
+    }
+  }
 }

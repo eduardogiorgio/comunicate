@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category';
@@ -19,6 +19,7 @@ import { SettingsService } from '../services/settings.service';
 import { ActionGroupService } from '../services/action-group.service';
 import { ActionGroup } from '../models/action-group';
 import { NoSelected } from '../models/no-selected';
+import { SuperTabs } from '@ionic-super-tabs/angular';
 
 
 @Component({
@@ -35,17 +36,18 @@ export class Tab1Page implements OnInit {
 
   settings: Settings;
   categories: Category[];
-  //groups: Group[];
-  //actions: Action[];
-  //actionGroups: ActionGroup[];
-
+  
   latestSelected: Category | Group | Action | NoSelected;
-  categorySelected: Category;
+  //categorySelected: Category;
   noSelected: NoSelected;
+
+  // get current tab
+  @ViewChild(SuperTabs) tabs: SuperTabs;
 
   ngOnInit(): void {
     this.latestSelected = this.noSelected;
     this.getCategories();
+    //this.categorySelected = this.categories[0];
     this.getSettings();
   }
 
@@ -68,21 +70,12 @@ export class Tab1Page implements OnInit {
     await modal.present();
     const { data } = await modal.onDidDismiss();
     if (data) {
-      this.getCategories();
-      this.categorySelected = this.categories.find( x => x.id == data.id);
-      //this.categoryChanged(this.categorySelected);
-      // TODO: ver de hacer que refresque mejor por el cambio de id
-      this.categories = this.categories; // detect reflection 
+      this.refreshAll();
     }
   }
 
-  getCategory(idCategory: number) {
-    this.categorySelected = this.categoryService.loadCategories().find(x => x.id ===  this.categorySelected.id);
-  }
-
-
   addGroup() {
-    this.pushGroupPage(null, this.categorySelected.id);
+    this.pushGroupPage(null, this.categories[this.tabs.activeTabIndex].id);
   }
 
  async pushGroupPage(group?: Group, categoryId?: number) {
@@ -97,24 +90,13 @@ export class Tab1Page implements OnInit {
     await modal.present();
     const { data } = await modal.onDidDismiss();
     if (data) {
-      //TODO: call refresh or not
-      //this.getGroups(this.categorySelected.id);
-      //this.getGroups(this.categorySelected.id);
-      //this.groupSelected = this.groups.find( x => x.id == data.id);
-      //this.groupChanged();
+      this.refreshAll();
     }
   }
 
 addAction() {
-  this.pushActionPage(null, this.categorySelected.id);
+  this.pushActionPage(null, this.categories[this.tabs.activeTabIndex].id);
 }
-/*
-deleteAction() {
-  
-  this.actionSelected = null;
-  //this.getActions(this.categorySelected.id);
-}
-*/
 
 async pushActionPage(action?: Action, categoryId?: number) {
  const modal = await this.modalController.create({
@@ -128,24 +110,22 @@ async pushActionPage(action?: Action, categoryId?: number) {
   await modal.present();
   const { data } = await modal.onDidDismiss();
   if (data) {
-    /*
-    this.getActions(this.categorySelected.id);
-    // si no esta en la misma categoria
-    if(data.categoryId == this.categorySelected.id){
-      this.actionSelected = this.actions.find( x => x.id == data.id);
-      this.actionChanged(this.actionSelected);
-    } else if(data.id == this.actionSelected.id){ // si se edito y cambio de cateogira
-      this.actionSelected = null;
-      this.latestSelected = NoSelected;
-    }
-    */
+      this.refreshAll();
   }
 }
 
+/*
 categoryChangedIndex(index: any){
+  console.log(index);
   this.categorySelected = this.categories[index.detail];
-  this.latestSelected = this.categorySelected;
+  
+  //TODO: problem autoselect
+  // change detected if type equals category
+  if(this.detectedType(this.latestSelected) instanceof Category){
+    this.latestSelected = this.categorySelected;
+  }
 }
+*/
 
 latestSelectedChange(latestSelected: Category | Group | Action | NoSelected){
   if(this.latestSelected == latestSelected){
@@ -176,9 +156,9 @@ editItem(item : Category | Group | Action | NoSelected) {
   if(type instanceof Category){
     this.pushCategoryPage(item as Category);
   } else if(type instanceof Group){
-    this.pushGroupPage(item as Group, this.categorySelected.id);
+    this.pushGroupPage(item as Group, this.categories[this.tabs.activeTabIndex].id); //  this.categorySelected.id
   } else if(type instanceof Action){
-    this.pushActionPage(item as Action, this.categorySelected.id);
+    this.pushActionPage(item as Action, this.categories[this.tabs.activeTabIndex].id);
   }
   
 }
@@ -198,9 +178,16 @@ deleteItem(item : Category | Group | Action | NoSelected) {
     this.actionService.delete(item as Action);
     this.actionGroupService.saveActionWithGroups(item as Action, []);
   }
+ //reflection
+  if(type instanceof Category || type instanceof Group || type instanceof Action){
+    this.refreshAll();
+  }
+
   this.latestSelected = this.noSelected;
 }
 
+// ver que el latest selected este en las configuraciones
+//TODO: VER herencia para no repetir las acciones
 unselectedItem(item : Category | Group | Action | NoSelected){
   if(!this.settings.editMode) return;
   setTimeout(()=>{
@@ -303,4 +290,16 @@ speechText(text: string) {
       toast.present();
     }
     
+    
+    //TODO: ver mejorrr
+    //reflection 
+    refreshAll(){
+      //reflection
+      this.getCategories();
+      // TODO: ver de hacer que refresque mejor por el cambio de id
+      // necesario
+      this.categories[0] = this.categories.find(x => x.id == this.categories[0].id)
+      this.categories = this.categories;
+    }
+ 
 }

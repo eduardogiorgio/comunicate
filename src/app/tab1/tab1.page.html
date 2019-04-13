@@ -23,8 +23,8 @@
 </ion-header>
 <ion-content>
 
-  <!-- [(ngModel)]="categorySelected" -->
-    <super-tabs (activeTabIndexChange)="categoryChangedIndex($event)"><!-- <super-tabs [config]="config" (tabChange)="onTabChange($event)"> -->
+  <!-- [(ngModel)]="categorySelected" this.categories[this.tabs.activeTabIndex].id --> 
+    <super-tabs><!-- (activeTabIndexChange)="categoryChangedIndex($event)" --><!-- <super-tabs [config]="config" (tabChange)="onTabChange($event)"> -->
         <super-tabs-container>
           <super-tab *ngFor="let category of categories">
             <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings"></app-category-detail>  <!--  -->
@@ -69,10 +69,10 @@
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="top">
-          <ion-fab-button (click)="addAction()" [disabled]="latestSelected == noSelected" data-desc="Añadir accion">
+          <ion-fab-button (click)="addAction()" [disabled]="!tabs.activeTabIndex" data-desc="Añadir accion">
               <ion-icon name="walk"></ion-icon>
           </ion-fab-button>
-          <ion-fab-button (click)="addGroup()" [disabled]="latestSelected == noSelected" data-desc="Añadir grupo">
+          <ion-fab-button (click)="addGroup()" [disabled]="!tabs.activeTabIndex" data-desc="Añadir grupo">
               <ion-icon name="grid"></ion-icon>
           </ion-fab-button>
           <ion-fab-button (click)="addCategory()" data-desc="Añadir categoria">
