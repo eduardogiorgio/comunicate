@@ -7,6 +7,7 @@ import { ActionService } from '../services/action.service';
 import { Action } from '../models/action';
 import { ActionGroupService } from '../services/action-group.service';
 import { ICONS } from '../mocks/mock.icons';
+import { SelectIconComponent } from '../select-icon/select-icon.component';
 
 @Component({
   selector: 'app-group-edit',
@@ -61,6 +62,17 @@ export class GroupEditComponent implements OnInit {
       actions: new FormControl(this.actionsSelected),
    });
   }
+
+  async pushIconPage() {
+    const modal = await this.modalController.create({
+     component: SelectIconComponent
+   });
+   await modal.present();
+   const { data } = await modal.onDidDismiss();
+   if (data) {
+     this.groupform.controls.icon.setValue(data);
+   }
+ }
 
   initializateGroup() {
     if (!this.group && this.categoryId) {

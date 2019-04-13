@@ -55,11 +55,7 @@ export class CategoryEditComponent implements OnInit {
   
   async pushIconPage() {
     const modal = await this.modalController.create({
-     component: SelectIconComponent,
-     //componentProps: {
-     //  'category': category,
-     //}
-
+     component: SelectIconComponent
    });
    await modal.present();
    const { data } = await modal.onDidDismiss();
