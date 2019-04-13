@@ -42,6 +42,7 @@ export class Tab1Page implements OnInit {
   noSelected: NoSelected;
 
   // get current tab
+  
   @ViewChild(SuperTabs) tabs: SuperTabs;
 
   ngOnInit(): void {

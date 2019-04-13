@@ -25,13 +25,6 @@
 
   <!-- [(ngModel)]="categorySelected" this.categories[this.tabs.activeTabIndex].id --> 
     <super-tabs><!-- (activeTabIndexChange)="categoryChangedIndex($event)" --><!-- <super-tabs [config]="config" (tabChange)="onTabChange($event)"> -->
-        <super-tabs-container>
-          <super-tab *ngFor="let category of categories">
-            <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>  <!--  -->
-              <!--{{category.name}}-->
-          </super-tab>
-        </super-tabs-container>
-        
         <super-tabs-toolbar> <!-- scrollable -->
           <!--<super-tab-button (click)="onTabClick($event)">-->
           <super-tab-button *ngFor="let category of categories"  (click)="unselectedItem(category)" (press)="editItem(category)">
@@ -39,6 +32,13 @@
               <ion-label *ngIf="settings.ShowCategories != 0">{{category.name}}</ion-label>
           </super-tab-button>
         </super-tabs-toolbar>
+
+        <super-tabs-container>
+          <super-tab *ngFor="let category of categories">
+            <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>  <!--  -->
+              <!--{{category.name}}-->
+          </super-tab>
+        </super-tabs-container>
       </super-tabs>
   
 
@@ -69,10 +69,10 @@
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="top">
-          <ion-fab-button (click)="addAction()" [disabled]="!tabs.activeTabIndex" data-desc="Añadir accion">
+          <ion-fab-button (click)="addAction()" [disabled]="!(tabs.activeTabIndex > -1)" data-desc="Añadir accion">
               <ion-icon name="walk"></ion-icon>
           </ion-fab-button>
-          <ion-fab-button (click)="addGroup()" [disabled]="!tabs.activeTabIndex" data-desc="Añadir grupo">
+          <ion-fab-button (click)="addGroup()" [disabled]="!(tabs.activeTabIndex > -1)" data-desc="Añadir grupo">
               <ion-icon name="grid"></ion-icon>
           </ion-fab-button>
           <ion-fab-button (click)="addCategory()" data-desc="Añadir categoria">
