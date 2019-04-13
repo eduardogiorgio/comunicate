@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category';
@@ -19,6 +19,7 @@ import { SettingsService } from '../services/settings.service';
 import { ActionGroupService } from '../services/action-group.service';
 import { ActionGroup } from '../models/action-group';
 import { NoSelected } from '../models/no-selected';
+import { SuperTabs } from '@ionic-super-tabs/angular';
 
 
 @Component({
@@ -35,19 +36,18 @@ export class Tab1Page implements OnInit {
 
   settings: Settings;
   categories: Category[];
-  groups: Group[];
-  actions: Action[];
-  actionGroups: ActionGroup[];
-
+  
   latestSelected: Category | Group | Action | NoSelected;
-  categorySelected: Category;
-  groupSelected: Group;
-  actionSelected: Action;
+  //categorySelected: Category;
   noSelected: NoSelected;
+
+  // get current tab
+  @ViewChild(SuperTabs) tabs: SuperTabs;
 
   ngOnInit(): void {
     this.latestSelected = this.noSelected;
     this.getCategories();
+    //this.categorySelected = this.categories[0];
     this.getSettings();
   }
 
@@ -57,20 +57,6 @@ export class Tab1Page implements OnInit {
 
   addCategory() {
       this.pushCategoryPage(null);
-  }
-
-  editCategory(category?: Category) {
-    if(!this.settings.editMode) return;
-    this.categorySelected = category ?  category : this.categorySelected;
-    this.pushCategoryPage(this.categorySelected);
-  }
-
-  deleteCategory() {
-    this.categoryService.delete(this.categorySelected);
-    this.groupService.deleteGroupsByCategory(this.categorySelected.id);
-    this.actionService.deleteActionsByCategory(this.categorySelected.id);
-    this.categorySelected = null;
-    this.getCategories();
   }
 
    async pushCategoryPage(category?: Category) {
@@ -84,38 +70,12 @@ export class Tab1Page implements OnInit {
     await modal.present();
     const { data } = await modal.onDidDismiss();
     if (data) {
-      this.getCategories();
-      this.categorySelected = this.categories.find( x => x.id == data.id);
-      this.categoryChanged();
+      this.refreshAll();
     }
   }
 
-  getCategory(idCategory: number) {
-    this.categorySelected = this.categoryService.loadCategories().find(x => x.id ===  this.categorySelected.id);
-  }
-
-
-  // groups
-  getGroups(idCategory: number) {
-    this.groups = this.groupService.loadGroupsByCategory(this.categorySelected.id);
-  }
-
   addGroup() {
-    this.pushGroupPage(null, this.categorySelected.id);
-  }
-
-  editGroup(group?: Group) {
-    if(!this.settings.editMode) return;
-    this.groupSelected = group ?  group : this.groupSelected;
-    this.pushGroupPage(this.groupSelected, this.categorySelected.id);
-  }
-
-  deleteGroup() {
-    this.groupService.delete(this.groupSelected);
-    this.actionGroupService.saveGroupWithActions(this.groupSelected, []);
-    this.groupSelected = null;
-    this.actionGroups = null;
-    this.getGroups(this.categorySelected.id);
+    this.pushGroupPage(null, this.categories[this.tabs.activeTabIndex].id);
   }
 
  async pushGroupPage(group?: Group, categoryId?: number) {
@@ -130,32 +90,12 @@ export class Tab1Page implements OnInit {
     await modal.present();
     const { data } = await modal.onDidDismiss();
     if (data) {
-      this.getGroups(this.categorySelected.id);
-      this.groupSelected = this.groups.find( x => x.id == data.id);
-      this.groupChanged();
+      this.refreshAll();
     }
   }
 
-// actions
-getActions(idCategory: number) {
-  this.actions = this.actionService.loadActionsByCategory(this.categorySelected.id);
-}
-
 addAction() {
-  this.pushActionPage(null, this.categorySelected.id);
-}
-
-editAction(action?: Action) {
-  if(!this.settings.editMode) return;
-  this.actionSelected = action ?  action : this.actionSelected;
-  this.pushActionPage(this.actionSelected, this.categorySelected.id);
-}
-
-deleteAction() {
-  this.actionService.delete(this.actionSelected);
-  this.actionGroupService.saveActionWithGroups(this.actionSelected, []);
-  this.actionSelected = null;
-  this.getActions(this.categorySelected.id);
+  this.pushActionPage(null, this.categories[this.tabs.activeTabIndex].id);
 }
 
 async pushActionPage(action?: Action, categoryId?: number) {
@@ -170,69 +110,89 @@ async pushActionPage(action?: Action, categoryId?: number) {
   await modal.present();
   const { data } = await modal.onDidDismiss();
   if (data) {
-    this.getActions(this.categorySelected.id);
-    // si no esta en la misma categoria
-    if(data.categoryId == this.categorySelected.id){
-      this.actionSelected = this.actions.find( x => x.id == data.id);
-      this.actionChanged(this.actionSelected);
-    } else if(data.id == this.actionSelected.id){ // si se edito y cambio de cateogira
-      this.actionSelected = null;
-      this.latestSelected = NoSelected;
-    }
+      this.refreshAll();
   }
 }
 
-categoryChanged() {
-  if (this.categorySelected) {
-    this.latestSelected = this.categorySelected;
-    this.groupSelected = null;
-    this.actionGroups = null;
-    this.getGroups(this.categorySelected.id);
-    this.getActions(this.categorySelected.id);
+// si esta seleccionado cuando cmabia de cateoria selecciona otro
+categoryChangedIndex(index: any){
+   //TODO: problem autoselect
+  // change detected if type equals category
+  if(this.detectedType(this.latestSelected) instanceof Category){
+    this.latestSelected = this.categories[index.detail];
   }
 }
 
-groupChanged() {
-  // si los elimina no cambia nada
-  if (this.groupSelected) {
-    this.latestSelected =  this.groupSelected;
-    this.actionGroups = this.actionGroupService.getActionByGroup(this.groupSelected.id);
+
+latestSelectedChange(latestSelected: Category | Group | Action | NoSelected){
+  if(this.latestSelected == latestSelected){
+    this.latestSelected = this.noSelected
+  } else{
+    this.latestSelected = latestSelected
   }
 }
 
-actionChanged(action: Action) {
-  this.actionSelected = action;
-  this.latestSelected =  this.actionSelected;
-  this.speechText(this.actionSelected.name);
-}
 
+detectedType (latestSelected : Category | Group | Action | NoSelected) : Category | Group | Action | NoSelected {
+  if(!latestSelected)
+    return new NoSelected();
+  if(!('id' in latestSelected))
+    return new NoSelected();
+  if(!('categoryId' in latestSelected))
+    return new Category();
+  if(!('path' in latestSelected))
+    return new Group();
+  if(!('icon' in latestSelected))
+    return new Action();
+}
 
 // ver de mejorar y hacer factory
-editItem() {
-  console.log(this.latestSelected);
-  if(this.latestSelected === this.categorySelected){
-    this.editCategory();
-  } else if(this.latestSelected === this.groupSelected){
-    this.editGroup();
-  } else if(this.latestSelected === this.actionSelected){
-    this.editAction();
+editItem(item : Category | Group | Action | NoSelected) {
+  this.latestSelected = item;
+  if(!this.settings.editMode) return;
+  const type = this.detectedType(item);
+  
+  if(type instanceof Category){
+    this.pushCategoryPage(item as Category);
+  } else if(type instanceof Group){
+    this.pushGroupPage(item as Group, this.categories[this.tabs.activeTabIndex].id); //  this.categorySelected.id
+  } else if(type instanceof Action){
+    this.pushActionPage(item as Action, this.categories[this.tabs.activeTabIndex].id);
   }
   
 }
 
-deleteItem() {
-  // comparo si el mismo seleccionado
-  if(this.latestSelected === this.categorySelected){
-    this.deleteCategory();
-  } else if(this.latestSelected === this.groupSelected){
-    this.deleteGroup();
-  } else if(this.latestSelected === this.actionSelected){
-    this.deleteAction();
+deleteItem(item : Category | Group | Action | NoSelected) {
+  const type = this.detectedType(item);
+  
+  if(type instanceof Category){
+    this.categoryService.delete(item as Category);
+    this.groupService.deleteGroupsByCategory((item as Category).id);
+    this.actionService.deleteActionsByCategory((item as Category).id);
+    this.getCategories();
+  } else if(type instanceof Group){
+    this.groupService.delete(item as Group);
+    this.actionGroupService.saveGroupWithActions(item as Group, []);
+  } else if(type instanceof Action){
+    this.actionService.delete(item as Action);
+    this.actionGroupService.saveActionWithGroups(item as Action, []);
+  }
+ //reflection
+  if(type instanceof Category || type instanceof Group || type instanceof Action){
+    this.refreshAll();
   }
 
   this.latestSelected = this.noSelected;
 }
 
+// ver que el latest selected este en las configuraciones
+//TODO: VER herencia para no repetir las acciones
+unselectedItem(item : Category | Group | Action | NoSelected){
+  if(!this.settings.editMode) return;
+  setTimeout(()=>{
+    this.latestSelected = this.latestSelected == item ? this.noSelected : item;
+  },100);
+}
 
 speechText(text: string) {
   const ttsOptions: TTSOptions = {
@@ -328,32 +288,17 @@ speechText(text: string) {
       });
       toast.present();
     }
-   
-    //TODO: refactorizar
-    // si es el mismo 2 veces se deselecciona
-    unselectedGroupIfEquals(group){
-      console.log(this.groupSelected);
-      console.log(group);
-      if(group && this.groupSelected == group){
-        console.log("entro");
-        setTimeout(()=>{
-          this.groupSelected = null;
-          this.latestSelected = this.noSelected;
-          this.actionGroups = null; // no se porque le puse null pero es un pipe revisar despues
-           }, 100)
-      }
+    
+    
+    //TODO: ver mejorrr
+    //reflection 
+    refreshAll(){
+      //reflection
+      this.getCategories();
+      // TODO: ver de hacer que refresque mejor por el cambio de id
+      // necesario
+      this.categories[0] = this.categories.find(x => x.id == this.categories[0].id)
+      this.categories = this.categories;
     }
-
-    // si es el mismo 2 veces se deselecciona
-    unselectedCategoryIfEquals(category){
-      console.log(this.categorySelected);
-      console.log(category);
-      if(category && this.categorySelected == category){
-        console.log("entro");
-        setTimeout(()=>{
-          this.categorySelected = null;
-          this.latestSelected = this.noSelected;
-           }, 100)
-      }
-    }
+ 
 }

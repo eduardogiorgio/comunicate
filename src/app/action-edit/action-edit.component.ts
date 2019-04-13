@@ -49,6 +49,10 @@ export class ActionEditComponent implements OnInit {
 
   ngOnInit() {
     this.getCategories();
+    // if not passing using first :)
+    if(!this.categoryId){
+      this.categoryId = this.categories[0].id;
+    }
     this.getGroupsByCategory(this.categoryId);
     this.getActionsByCategory(this.categoryId);
     this.getSettings();

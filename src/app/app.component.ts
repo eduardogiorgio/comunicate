@@ -5,8 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
-
 import { CategoryService } from './services/category.service';
 import { GroupService } from './services/group.service';
 import { ActionService } from './services/action.service';
@@ -20,11 +18,6 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    // private sqlite: SQLite,
-    private categoryService: CategoryService,
-    private groupService: GroupService,
-    private actionService: ActionService,
-    private alertCtrl: AlertController
   ) {
     this.initializeApp();
   }
