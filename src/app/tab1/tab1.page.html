@@ -23,47 +23,66 @@
 </ion-header>
 <ion-content>
 
-  <!-- [(ngModel)]="categorySelected" this.categories[this.tabs.activeTabIndex].id --> 
-    <super-tabs (activeTabIndexChange)="categoryChangedIndex($event)"><!-- (activeTabIndexChange)="categoryChangedIndex($event)" --><!-- <super-tabs [config]="config" (tabChange)="onTabChange($event)"> -->
-        <super-tabs-toolbar> <!-- scrollable -->
-          <!--<super-tab-button (click)="onTabClick($event)">-->
+
+  <!-- (click)="unselectedItem(category)" (press)="editItem(category)" [class.latest-selected]="settings.editMode && category == latestSelected" -->
+  
+    <ion-segment  [(ngModel)]="tabs"> 
+      <ion-segment-button *ngFor="let category of categories;let i = index" (click)="selectTab(i)" [value]="i"> 
+        <ion-icon *ngIf="settings.ShowCategories != 1"  [name]="category.icon"></ion-icon>
+        <ion-label *ngIf="settings.ShowCategories != 0">{{category.name}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  
+
+    <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
+      <ion-slide  *ngFor="let category of categories">
+          <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>
+      </ion-slide>
+    </ion-slides>
+
+<!--
+  <ion-segment mode="md" [(ngModel)]="tabs" color="dark">
+    <ion-segment-button value="contacts" text-wrap (click)="selectTab(0)" value="0">
+      A&ntilde;adidos
+    </ion-segment-button>
+
+    <ion-segment-button value="pending" text-wrap (click)="selectTab(1)" value="1">
+      Pendientes
+    </ion-segment-button>
+  </ion-segment>
+-->
+<!--
+  <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
+    <ion-slide>
+      asdfads
+      <contacts-list></contacts-list>
+    </ion-slide>
+    <ion-slide>
+      dasfadsf
+      <pending-list></pending-list>
+    </ion-slide>
+  </ion-slides>
+-->
+  <!--
+    <super-tabs (activeTabIndexChange)="categoryChangedIndex($event)">
+        <super-tabs-toolbar>
           <super-tab-button *ngFor="let category of categories"  (click)="unselectedItem(category)" (press)="editItem(category)" [class.latest-selected]="settings.editMode && category == latestSelected">
-              <ion-icon *ngIf="settings.ShowCategories != 1"  [name]="category.icon"></ion-icon><!--☺-->
+              <ion-icon *ngIf="settings.ShowCategories != 1"  [name]="category.icon"></ion-icon>
               <ion-label *ngIf="settings.ShowCategories != 0">{{category.name}}</ion-label>
           </super-tab-button>
         </super-tabs-toolbar>
 
         <super-tabs-container>
           <super-tab *ngFor="let category of categories">
-            <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>  <!--  -->
-              <!--{{category.name}}-->
+            <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>
           </super-tab>
         </super-tabs-container>
       </super-tabs>
+    -->
+
+
   
 
-
-  <!--
-    <ion-toolbar>
-          <ion-segment  scrollable [(ngModel)]="categorySelected"  (ionChange)="categoryChanged()">
-              <ion-segment-button *ngFor="let category of categories" [class.latest-selected]="settings.editMode && category == latestSelected"  [value]="category" (click)="unselectedCategoryIfEquals(category)" (press)="editCategory(category)" > 
-                <ion-icon *ngIf="settings.ShowCategories == 0 || settings.ShowCategories == 2" [name]="category.icon"></ion-icon>
-                {{settings.ShowCategories == 1 || settings.ShowCategories == 2 ? category.name  : ''}}
-              </ion-segment-button>
-            </ion-segment>
-  <ion-grid>
-      <ion-row *ngIf="categorySelected">
-        <ion-col *ngFor="let action of actions | actionsByGroup:actionGroups; index as i; first as isFirst" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
-            <ion-card class="welcome-card" [class.selected-action]="action == actionSelected" [class.latest-selected]="settings.editMode && action == latestSelected" (click)="actionChanged(action)" (press)="editAction(action)">
-                <ion-img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';"></ion-img>
-                <ion-card-header>
-                  <ion-card-title text-center>{{action.name}}</ion-card-title>
-                </ion-card-header>
-              </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  -->
     <ion-fab *ngIf="settings.editMode" vertical="bottom" horizontal="end" class="ion-fab-extra-margin">
       <ion-fab-button>
           <ion-icon name="add"></ion-icon>

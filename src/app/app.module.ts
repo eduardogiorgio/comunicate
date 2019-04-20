@@ -38,12 +38,12 @@ import { SettingsService } from './services/settings.service';
 //hammer events
 import { IonicGestureConfig } from './gestures/ionic-gesture-config';
 // supertabs
-import { SuperTabsModule } from '@ionic-super-tabs/angular';
+//import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 @NgModule({
   declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent],
   entryComponents: [ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule,SuperTabsModule.forRoot()],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule],
   providers: [
     StatusBar,
     SplashScreen,

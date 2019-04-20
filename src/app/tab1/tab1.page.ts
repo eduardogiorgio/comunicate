@@ -8,7 +8,7 @@ import { ActionService } from '../services/action.service';
 import { Action } from '../models/action';
 
 import { Storage } from '@ionic/storage';
-import { ModalController, AlertController, ToastController } from '@ionic/angular';
+import { ModalController, AlertController, ToastController,IonSlides } from '@ionic/angular';
 import { ActionEditComponent } from '../action-edit/action-edit.component';
 import { GroupEditComponent } from '../group-edit/group-edit.component';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
@@ -19,7 +19,7 @@ import { SettingsService } from '../services/settings.service';
 import { ActionGroupService } from '../services/action-group.service';
 import { ActionGroup } from '../models/action-group';
 import { NoSelected } from '../models/no-selected';
-import { SuperTabs } from '@ionic-super-tabs/angular';
+
 
 
 @Component({
@@ -42,7 +42,20 @@ export class Tab1Page implements OnInit {
   noSelected: NoSelected;
 
   // get current tab
-  @ViewChild(SuperTabs) tabs: SuperTabs;
+  //@ViewChild(SuperTabs) tabs: SuperTabs;
+
+  // slides
+  @ViewChild('pageSlider') pageSlider: IonSlides;
+  tabs: string = "0";
+  selectTab(index) {
+    this.pageSlider.slideTo(index);
+  }
+  changeWillSlide() {
+    this.pageSlider.getActiveIndex().then(x => {
+      this.tabs = x.toString();
+    });
+   }
+
 
   ngOnInit(): void {
     this.latestSelected = this.noSelected;
@@ -75,7 +88,7 @@ export class Tab1Page implements OnInit {
   }
 
   addGroup() {
-    this.pushGroupPage(null, this.categories[this.tabs.activeTabIndex].id);
+    //this.pushGroupPage(null, this.categories[this.tabs.activeTabIndex].id);
   }
 
  async pushGroupPage(group?: Group, categoryId?: number) {
@@ -95,7 +108,7 @@ export class Tab1Page implements OnInit {
   }
 
 addAction() {
-  this.pushActionPage(null, this.categories[this.tabs.activeTabIndex].id);
+  //this.pushActionPage(null, this.categories[this.tabs.activeTabIndex].id);
 }
 
 async pushActionPage(action?: Action, categoryId?: number) {
@@ -155,9 +168,9 @@ editItem(item : Category | Group | Action | NoSelected) {
   if(type instanceof Category){
     this.pushCategoryPage(item as Category);
   } else if(type instanceof Group){
-    this.pushGroupPage(item as Group, this.categories[this.tabs.activeTabIndex].id); //  this.categorySelected.id
+    //this.pushGroupPage(item as Group, this.categories[this.tabs.activeTabIndex].id); //  this.categorySelected.id
   } else if(type instanceof Action){
-    this.pushActionPage(item as Action, this.categories[this.tabs.activeTabIndex].id);
+    //this.pushActionPage(item as Action, this.categories[this.tabs.activeTabIndex].id);
   }
   
 }
