@@ -88,7 +88,7 @@ export class Tab1Page implements OnInit {
   }
 
   addGroup() {
-    //this.pushGroupPage(null, this.categories[this.tabs.activeTabIndex].id);
+    this.pushGroupPage(null, this.categories[+this.tabs].id);
   }
 
  async pushGroupPage(group?: Group, categoryId?: number) {
@@ -108,7 +108,7 @@ export class Tab1Page implements OnInit {
   }
 
 addAction() {
-  //this.pushActionPage(null, this.categories[this.tabs.activeTabIndex].id);
+  this.pushActionPage(null, this.categories[+this.tabs].id);
 }
 
 async pushActionPage(action?: Action, categoryId?: number) {
@@ -168,9 +168,9 @@ editItem(item : Category | Group | Action | NoSelected) {
   if(type instanceof Category){
     this.pushCategoryPage(item as Category);
   } else if(type instanceof Group){
-    //this.pushGroupPage(item as Group, this.categories[this.tabs.activeTabIndex].id); //  this.categorySelected.id
+    this.pushGroupPage(item as Group, this.categories[+this.tabs].id); //  this.categorySelected.id
   } else if(type instanceof Action){
-    //this.pushActionPage(item as Action, this.categories[this.tabs.activeTabIndex].id);
+    this.pushActionPage(item as Action, this.categories[+this.tabs].id);
   }
   
 }

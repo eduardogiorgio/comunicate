@@ -3,3 +3,15 @@
     background-color: #cc0;
     color: #333;
   } 
+
+  
+  ion-button div {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
+  .latest-button-selected {
+    color: #cc0;
+  } 
+  

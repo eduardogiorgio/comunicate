@@ -53,6 +53,7 @@ export class CategoryDetailComponent implements OnInit {
 
   getActions() {
     this.actions = this.actionService.loadActionsByCategory(this.category.id);
+    console.log(this.actions);
   }
   
   // ver que el latest selected este en las configuraciones
@@ -71,8 +72,15 @@ export class CategoryDetailComponent implements OnInit {
     if (group) {
       if(group == this.latestSelected){
         this.getGroups();
+        this.actionGroups = undefined;
       } else{
+        this.groupSelected = group;
         this.actionGroups = this.actionGroupService.getActionByGroup(this.groupSelected.id);
+      }
+
+      if(!this.settings.editMode){
+        this.latestSelected = this.latestSelected == group ? this.noSelected : group;
+        this.latestSelectedChange.emit(this.latestSelected);
       }
     }
   }

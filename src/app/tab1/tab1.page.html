@@ -27,14 +27,14 @@
   <!-- (click)="unselectedItem(category)" (press)="editItem(category)" [class.latest-selected]="settings.editMode && category == latestSelected" -->
   
     <ion-segment  [(ngModel)]="tabs"> 
-      <ion-segment-button *ngFor="let category of categories;let i = index" (click)="selectTab(i)" [value]="i"> 
+      <ion-segment-button *ngFor="let category of categories;let i = index" (click)="selectTab(i)" [value]="i" (click)="unselectedItem(category)" (press)="editItem(category)" [class.latest-selected]="settings.editMode && category == latestSelected"> 
         <ion-icon *ngIf="settings.ShowCategories != 1"  [name]="category.icon"></ion-icon>
         <ion-label *ngIf="settings.ShowCategories != 0">{{category.name}}</ion-label>
       </ion-segment-button>
     </ion-segment>
   
 
-    <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
+    <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)" style="min-height: 100%;height: auto; margin: 0;">
       <ion-slide  *ngFor="let category of categories">
           <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>
       </ion-slide>
@@ -88,10 +88,10 @@
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="top">
-          <ion-fab-button (click)="addAction()" [disabled]="!(tabs.activeTabIndex > -1)" data-desc="Añadir accion">
+          <ion-fab-button (click)="addAction()" [disabled]="!(tabs > -1)" data-desc="Añadir accion">
               <ion-icon name="walk"></ion-icon>
           </ion-fab-button>
-          <ion-fab-button (click)="addGroup()" [disabled]="!(tabs.activeTabIndex > -1)" data-desc="Añadir grupo">
+          <ion-fab-button (click)="addGroup()" [disabled]="!(tabs > -1)" data-desc="Añadir grupo">
               <ion-icon name="grid"></ion-icon>
           </ion-fab-button>
           <ion-fab-button (click)="addCategory()" data-desc="Añadir categoria">
