@@ -30,7 +30,7 @@ export class CategoryDetailComponent implements OnInit {
   @Output() callEditing = new EventEmitter<Category | Group | Action | NoSelected>();
   
   
-  groupSelected: Group;
+  groupsSelected: Group[] = [];
   groups: Group[];
   actions: Action[];
   
@@ -67,22 +67,31 @@ export class CategoryDetailComponent implements OnInit {
     },100);
   }
   
-  groupChanged(group) {
-    // si los elimina no cambia nada
-    if (group) {
-      if(group == this.latestSelected){
-        this.getGroups();
-        this.actionGroups = undefined;
-      } else{
-        this.groupSelected = group;
-        this.actionGroups = this.actionGroupService.getActionByGroup(this.groupSelected.id);
+  // unselectedItem tiene su propia logica particular
+  groupChanged(group : Group) {
+    // agrega o quita de la lista
+    const existGroup =  this.groupsSelected.indexOf(group) > -1;
+    if(existGroup){
+      this.groupsSelected = this.groupsSelected.filter(x => x.id != group.id);
+      if(group === this.latestSelected){
+        this.unselectedItem(group)  
       }
-
-      if(!this.settings.editMode){
-        this.latestSelected = this.latestSelected == group ? this.noSelected : group;
-        this.latestSelectedChange.emit(this.latestSelected);
-      }
+    } else{
+      this.groupsSelected.push(group);
+      this.unselectedItem(group)
     }
+    console.log(this.groupsSelected);
+    if( this.groupsSelected.length > 0){
+      this.actionGroups = this.actionGroupService.getActionByGroups(this.groupsSelected);
+    } else {
+
+      this.actionGroups = undefined; // no filtre
+    }
+    
+  }
+
+  groupedsSelected(group): boolean {
+    return (this.groupsSelected.indexOf(group) > -1);
   }
 
   editItem(item : Category | Group | Action){
