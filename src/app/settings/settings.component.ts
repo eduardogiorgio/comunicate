@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../services/settings.service';
 import { Settings } from '../models/settings';
 import { ModalController } from '@ionic/angular';
+import { TourComponent } from '../tour/tour.component';
 
 @Component({
   selector: 'app-settings',
@@ -29,4 +30,10 @@ export class SettingsComponent implements OnInit {
     this.modalController.dismiss();
   }
 
+  async showTour() {
+    const modal = await this.modalController.create({
+     component: TourComponent,
+   });
+   await modal.present();
+ }
 }
