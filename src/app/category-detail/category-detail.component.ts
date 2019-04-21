@@ -10,6 +10,7 @@ import { Action } from '../models/action';
 import { ActionGroup } from '../models/action-group';
 import { NoSelected } from '../models/no-selected';
 import { Settings } from '../models/settings';
+import { TextToSpeech, TTSOptions } from '@ionic-native/text-to-speech/ngx';
 
 @Component({
   selector: 'app-category-detail',
@@ -31,6 +32,8 @@ export class CategoryDetailComponent implements OnInit {
   
   
   groupsSelected: Group[] = [];
+  actionSelected : Action;
+
   groups: Group[];
   actions: Action[];
   
@@ -39,6 +42,7 @@ export class CategoryDetailComponent implements OnInit {
   constructor(private groupService: GroupService, 
     private actionGroupService: ActionGroupService,
     private actionService: ActionService,
+    private tts: TextToSpeech,
     private settingsService: SettingsService) { }
 
   ngOnInit() {
@@ -53,13 +57,11 @@ export class CategoryDetailComponent implements OnInit {
 
   getActions() {
     this.actions = this.actionService.loadActionsByCategory(this.category.id);
-    console.log(this.actions);
   }
   
   // ver que el latest selected este en las configuraciones
   //TODO: VER herencia para no repetir las acciones
   unselectedItem(item : Category | Group | Action | NoSelected){
-    console.log(item);
     if(!this.settings.editMode) return;
     setTimeout(()=>{
       this.latestSelected = this.latestSelected == item ? this.noSelected : item;
@@ -80,16 +82,14 @@ export class CategoryDetailComponent implements OnInit {
       this.groupsSelected.push(group);
       this.unselectedItem(group)
     }
-    console.log(this.groupsSelected);
     if( this.groupsSelected.length > 0){
       this.actionGroups = this.actionGroupService.getActionByGroups(this.groupsSelected);
     } else {
-
       this.actionGroups = undefined; // no filtre
     }
     
   }
-
+  
   groupedsSelected(group): boolean {
     return (this.groupsSelected.indexOf(group) > -1);
   }
@@ -97,4 +97,21 @@ export class CategoryDetailComponent implements OnInit {
   editItem(item : Category | Group | Action){
     this.callEditing.emit(item);
   }
+
+  speechText(text: string) {
+    const ttsOptions: TTSOptions = {
+       text: text,
+       rate: this.settings.rateSpeek, // poder usar el del tablet
+       locale: this.settings.localeSpeek
+      };
+  
+      this.tts.speak(ttsOptions)
+    .then(() => console.log('Success'))
+    .catch((reason: any) => console.log(reason));
+    }
+
+    selectedAction(action: Action){
+      this.actionSelected = action;
+      this.speechText(this.actionSelected.name);
+    }
 }

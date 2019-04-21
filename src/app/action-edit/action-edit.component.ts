@@ -86,7 +86,7 @@ export class ActionEditComponent implements OnInit {
     if (!this.action && this.categoryId) {
       this.action = new Action();
       this.action.id = new Date().valueOf(); // genera el id unico;
-      this.action.name = 'My new Action';
+      this.action.name = 'Mi nueva accion'; // multiidioma
       this.action.path = './assets/images/camera-icon.png'; // default
       this.action.categoryId = this.categoryId;
       this.order = this.actions.length;

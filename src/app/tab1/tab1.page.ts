@@ -12,12 +12,10 @@ import { ModalController, AlertController, ToastController,IonSlides } from '@io
 import { ActionEditComponent } from '../action-edit/action-edit.component';
 import { GroupEditComponent } from '../group-edit/group-edit.component';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
-import { TextToSpeech, TTSOptions } from '@ionic-native/text-to-speech/ngx';
 import { SettingsComponent } from '../settings/settings.component';
 import { Settings } from '../models/settings';
 import { SettingsService } from '../services/settings.service';
 import { ActionGroupService } from '../services/action-group.service';
-import { ActionGroup } from '../models/action-group';
 import { NoSelected } from '../models/no-selected';
 
 
@@ -28,23 +26,19 @@ import { NoSelected } from '../models/no-selected';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
- constructor(private route: ActivatedRoute, private tts: TextToSpeech, private categoryService: CategoryService,
+ constructor(private categoryService: CategoryService,
              private groupService: GroupService, private actionGroupService: ActionGroupService,
              private actionService: ActionService, private settingsService: SettingsService,
-             private storage: Storage, private modalController: ModalController,
-             private alertController: AlertController,public toastController: ToastController) {}
+             private modalController: ModalController, private alertController: AlertController,
+             public toastController: ToastController) {}
 
   settings: Settings;
   categories: Category[];
   
   latestSelected: Category | Group | Action | NoSelected;
-  //categorySelected: Category;
   noSelected: NoSelected;
 
-  // get current tab
-  //@ViewChild(SuperTabs) tabs: SuperTabs;
-
-  // slides
+  
   @ViewChild('pageSlider') pageSlider: IonSlides;
   tabs: string = "0";
   selectTab(index) {
@@ -207,18 +201,6 @@ unselectedItem(item : Category | Group | Action | NoSelected){
   },100);
 }
 
-speechText(text: string) {
-  const ttsOptions: TTSOptions = {
-     text: text,
-     rate: this.settings.rateSpeek, // poder usar el del tablet
-     locale: this.settings.localeSpeek
-    };
-
-    this.tts.speak(ttsOptions)
-  .then(() => console.log('Success'))
-  .catch((reason: any) => console.log(reason));
-  }
-
   async pushSettingsPage() {
     const modal = await this.modalController.create({
      component: SettingsComponent,
@@ -254,11 +236,7 @@ speechText(text: string) {
    }
 
     async unlockByText() {
-      // crear la rgla
-      // un component distinto
-      //const alertController = document.querySelector('ion-alert-controller');
-      //await alertController.componentOnReady();
-    
+      
       const alert = await this.alertController.create({
         header: 'Ingrese contraseña',
         inputs: [
@@ -275,7 +253,7 @@ speechText(text: string) {
               role: 'cancel',
               cssClass: 'secondary',
               handler: () => {
-                console.log('Confirm Cancel: blah');
+                //console.log('Confirm Cancel: blah');
               }
             }, {
               text: 'Desbloquear',
