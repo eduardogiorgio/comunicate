@@ -17,6 +17,7 @@ import { Settings } from '../models/settings';
 import { SettingsService } from '../services/settings.service';
 import { ActionGroupService } from '../services/action-group.service';
 import { NoSelected } from '../models/no-selected';
+import { TourComponent } from '../tour/tour.component';
 
 
 
@@ -213,7 +214,22 @@ unselectedItem(item : Category | Group | Action | NoSelected){
 
    getSettings() {
      this.settings = this.settingsService.loadSettings();
+     // if first time
+     if(this.settings.isMyFirtView){
+        this.showTour();
+
+     }
    }
+
+   async showTour() {
+    const modal = await this.modalController.create({
+     component: TourComponent,
+   });
+   await modal.present();
+   await modal.onDidDismiss();
+   this.settings.isMyFirtView = false;
+   this.settingsService.saveSettings(this.settings);
+ }
 
    lock() {
     this.settings.editMode = false;

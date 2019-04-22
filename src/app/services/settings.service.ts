@@ -26,7 +26,7 @@ export class SettingsService {
 
     settginsDefault.rateSpeek =  0.80; // volumen 0 a 1 utilizar  slider
     settginsDefault.localeSpeek = 'es-AR'; // idioma por defecto del dispositivo buscar
-
+    settginsDefault.isMyFirtView = true;
     return settginsDefault;
   }
 
