@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Comunicate</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content> 
+  <ion-slides pager="true" class="slides"> <!-- [options]="slideOpts" -->
+    <ion-slide>
+      <ion-toolbar>
+        <ion-buttons end slot="end"><ion-button color="primary" fill="outline" (click)="dismiss()">Saltar</ion-button></ion-buttons>
+      </ion-toolbar>
+      
+      <img src="assets/images/ica-slidebox-img-1.png"/>
+      <h2>Bienvenidos a Comunicate</h2>
+      <p>Este programa fue creado para ayudar en la comunicacion del usuario a traves de tarjetas llamadas <strong>acciones</strong>.</p>
+    </ion-slide>
+    <ion-slide>
+          <ion-toolbar>
+            <ion-buttons end slot="end"><ion-button color="primary" fill="outline" (click)="dismiss()">Saltar</ion-button></ion-buttons>
+          </ion-toolbar>
+          <img src="assets/images/ica-slidebox-img-2.png" />
+          <h2>¿Como empiezo?</h2>
+          <p>Para crear hay que entrar modo edicion eprtar el candado, alli tendremos las diferentes opciones. Tambien se puede editar manteniendo presionado</p>
+    </ion-slide>
+    <ion-slide>
+          <ion-toolbar>
+            <ion-buttons end slot="end"><ion-button color="primary" fill="outline" (click)="dismiss()">Saltar</ion-button></ion-buttons>
+          </ion-toolbar>
+          <img src="assets/images/ica-slidebox-img-3.png" />
+          <h2>Configuraciones</h2>
+          <p>Presionando el engranaje tendras diferentes opciones para adaptar la aplicacion a lo que necesites. Ejemplo: Agregar cotraseña modo edicion, definir como se van a mostrar las imagenes</p>
+    </ion-slide>
+    <ion-slide>
+        <h2>Listo para comenzar</h2>
+        <ion-buttons end slot="center">
+          <ion-button color="primary"  (click)="dismiss()">Continuar</ion-button>
+        </ion-buttons>
+  </ion-slide>
+  </ion-slides>
+</ion-content>
