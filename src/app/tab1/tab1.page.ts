@@ -8,18 +8,17 @@ import { ActionService } from '../services/action.service';
 import { Action } from '../models/action';
 
 import { Storage } from '@ionic/storage';
-import { ModalController, AlertController, ToastController } from '@ionic/angular';
+import { ModalController, AlertController, ToastController,IonSlides } from '@ionic/angular';
 import { ActionEditComponent } from '../action-edit/action-edit.component';
 import { GroupEditComponent } from '../group-edit/group-edit.component';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
-import { TextToSpeech, TTSOptions } from '@ionic-native/text-to-speech/ngx';
 import { SettingsComponent } from '../settings/settings.component';
 import { Settings } from '../models/settings';
 import { SettingsService } from '../services/settings.service';
 import { ActionGroupService } from '../services/action-group.service';
-import { ActionGroup } from '../models/action-group';
 import { NoSelected } from '../models/no-selected';
-import { SuperTabs } from '@ionic-super-tabs/angular';
+import { TourComponent } from '../tour/tour.component';
+
 
 
 @Component({
@@ -28,21 +27,30 @@ import { SuperTabs } from '@ionic-super-tabs/angular';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
- constructor(private route: ActivatedRoute, private tts: TextToSpeech, private categoryService: CategoryService,
+ constructor(private categoryService: CategoryService,
              private groupService: GroupService, private actionGroupService: ActionGroupService,
              private actionService: ActionService, private settingsService: SettingsService,
-             private storage: Storage, private modalController: ModalController,
-             private alertController: AlertController,public toastController: ToastController) {}
+             private modalController: ModalController, private alertController: AlertController,
+             public toastController: ToastController) {}
 
   settings: Settings;
   categories: Category[];
   
   latestSelected: Category | Group | Action | NoSelected;
-  //categorySelected: Category;
   noSelected: NoSelected;
 
-  // get current tab
-  @ViewChild(SuperTabs) tabs: SuperTabs;
+  
+  @ViewChild('pageSlider') pageSlider: IonSlides;
+  tabs: string = "0";
+  selectTab(index) {
+    this.pageSlider.slideTo(index);
+  }
+  changeWillSlide() {
+    this.pageSlider.getActiveIndex().then(x => {
+      this.tabs = x.toString();
+    });
+   }
+
 
   ngOnInit(): void {
     this.latestSelected = this.noSelected;
@@ -75,7 +83,7 @@ export class Tab1Page implements OnInit {
   }
 
   addGroup() {
-    this.pushGroupPage(null, this.categories[this.tabs.activeTabIndex].id);
+    this.pushGroupPage(null, this.categories[+this.tabs].id);
   }
 
  async pushGroupPage(group?: Group, categoryId?: number) {
@@ -95,7 +103,7 @@ export class Tab1Page implements OnInit {
   }
 
 addAction() {
-  this.pushActionPage(null, this.categories[this.tabs.activeTabIndex].id);
+  this.pushActionPage(null, this.categories[+this.tabs].id);
 }
 
 async pushActionPage(action?: Action, categoryId?: number) {
@@ -155,9 +163,9 @@ editItem(item : Category | Group | Action | NoSelected) {
   if(type instanceof Category){
     this.pushCategoryPage(item as Category);
   } else if(type instanceof Group){
-    this.pushGroupPage(item as Group, this.categories[this.tabs.activeTabIndex].id); //  this.categorySelected.id
+    this.pushGroupPage(item as Group, this.categories[+this.tabs].id); //  this.categorySelected.id
   } else if(type instanceof Action){
-    this.pushActionPage(item as Action, this.categories[this.tabs.activeTabIndex].id);
+    this.pushActionPage(item as Action, this.categories[+this.tabs].id);
   }
   
 }
@@ -194,18 +202,6 @@ unselectedItem(item : Category | Group | Action | NoSelected){
   },100);
 }
 
-speechText(text: string) {
-  const ttsOptions: TTSOptions = {
-     text: text,
-     rate: this.settings.rateSpeek, // poder usar el del tablet
-     locale: this.settings.localeSpeek
-    };
-
-    this.tts.speak(ttsOptions)
-  .then(() => console.log('Success'))
-  .catch((reason: any) => console.log(reason));
-  }
-
   async pushSettingsPage() {
     const modal = await this.modalController.create({
      component: SettingsComponent,
@@ -218,7 +214,22 @@ speechText(text: string) {
 
    getSettings() {
      this.settings = this.settingsService.loadSettings();
+     // if first time
+     if(this.settings.isMyFirtView){
+        this.showTour();
+
+     }
    }
+
+   async showTour() {
+    const modal = await this.modalController.create({
+     component: TourComponent,
+   });
+   await modal.present();
+   await modal.onDidDismiss();
+   this.settings.isMyFirtView = false;
+   this.settingsService.saveSettings(this.settings);
+ }
 
    lock() {
     this.settings.editMode = false;
@@ -241,11 +252,7 @@ speechText(text: string) {
    }
 
     async unlockByText() {
-      // crear la rgla
-      // un component distinto
-      //const alertController = document.querySelector('ion-alert-controller');
-      //await alertController.componentOnReady();
-    
+      
       const alert = await this.alertController.create({
         header: 'Ingrese contraseña',
         inputs: [
@@ -262,7 +269,7 @@ speechText(text: string) {
               role: 'cancel',
               cssClass: 'secondary',
               handler: () => {
-                console.log('Confirm Cancel: blah');
+                //console.log('Confirm Cancel: blah');
               }
             }, {
               text: 'Desbloquear',
@@ -297,7 +304,9 @@ speechText(text: string) {
       this.getCategories();
       // TODO: ver de hacer que refresque mejor por el cambio de id
       // necesario
-      this.categories[0] = this.categories.find(x => x.id == this.categories[0].id)
+      if(this.categories[0]){
+        this.categories[0] = this.categories.find(x => x.id == this.categories[0].id)
+      }
       this.categories = this.categories;
     }
  

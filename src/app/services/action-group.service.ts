@@ -42,6 +42,12 @@ export class ActionGroupService {
     // this.actionsSelected = this.action.filter(x => actionGroups.findIndex(y => y.idAction === x.id) > 0 );
   }
 
+  getActionByGroups(groups: Group[]) {
+    const actionGroups = this.loadActionGroups().filter(x => groups.some(y => y.id === x.idGroup)  );
+    return actionGroups;
+    // this.actionsSelected = this.action.filter(x => actionGroups.findIndex(y => y.idAction === x.id) > 0 );
+  }
+
   saveGroupWithActions(group: Group, actions: Action[]) {
 
     // obtengo

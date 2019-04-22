@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { ActionsByGroupPipe } from '../pipes/actions-pipe';
-import { SuperTabsModule } from '@ionic-super-tabs/angular';
 import { CategoryDetailComponent } from '../category-detail/category-detail.component';
 
 @NgModule({
@@ -13,8 +12,7 @@ import { CategoryDetailComponent } from '../category-detail/category-detail.comp
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{ path: '', component: Tab1Page }]), // :id
-    SuperTabsModule.forRoot()    
+    RouterModule.forChild([{ path: '', component: Tab1Page }]), 
   ],
   providers: [ActionsByGroupPipe],
   declarations: [Tab1Page, ActionsByGroupPipe,CategoryDetailComponent]

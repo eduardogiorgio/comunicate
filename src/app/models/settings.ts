@@ -12,4 +12,5 @@ export class Settings {
     localeSpeek: string; // idioma
 
     editMode: boolean;
+    isMyFirtView: boolean;
 }

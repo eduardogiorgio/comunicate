@@ -8,6 +8,11 @@
                 </ion-button>
             </ion-buttons>
           <ion-title>Configuraciones</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="showTour()">
+                <ion-icon slot="icon-only" name="help-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -25,10 +30,13 @@
       <ion-label>Clave</ion-label>
       <ion-input type="text" [(ngModel)]="settings.patternPassword" placeholder="Ingrese su clave" autofocus clearInput (ngModelChange)="saveSettings()"></ion-input>
   </ion-item>
+  <!-- this functionality is not yet implemented -->
+    <!--
     <ion-item>
         <ion-label>Historial de seleccionadas</ion-label>
         <ion-toggle [(ngModel)]="settings.seletedHistory" (ngModelChange)="saveSettings()"></ion-toggle>
       </ion-item>
+      -->
     <ion-item>
         <ion-label>Acciones por fila</ion-label>
         <ion-select [(ngModel)]="settings.columnsPerRow" (ngModelChange)="saveSettings()" interface="popover">
