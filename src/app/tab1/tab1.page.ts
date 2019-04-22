@@ -304,7 +304,9 @@ unselectedItem(item : Category | Group | Action | NoSelected){
       this.getCategories();
       // TODO: ver de hacer que refresque mejor por el cambio de id
       // necesario
-      this.categories[0] = this.categories.find(x => x.id == this.categories[0].id)
+      if(this.categories[0]){
+        this.categories[0] = this.categories.find(x => x.id == this.categories[0].id)
+      }
       this.categories = this.categories;
     }
  

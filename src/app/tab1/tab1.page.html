@@ -32,13 +32,13 @@
         <ion-label *ngIf="settings.ShowCategories != 0">{{category.name}}</ion-label>
       </ion-segment-button>
     </ion-segment>
-  
-
     <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)" >
       <ion-slide  *ngFor="let category of categories">
           <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>
       </ion-slide>
     </ion-slides>
+  
+
   </ion-content>  
     <ion-fab *ngIf="settings.editMode" vertical="bottom" horizontal="end" class="ion-fab-extra-margin">
       <ion-fab-button>
