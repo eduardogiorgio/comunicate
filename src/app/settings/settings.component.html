@@ -40,7 +40,7 @@
     <ion-item>
         <ion-label>Acciones por fila</ion-label>
         <ion-select [(ngModel)]="settings.columnsPerRow" (ngModelChange)="saveSettings()" interface="popover">
-          <ion-select-option [value]="null">Automatico</ion-select-option>
+          <ion-select-option [value]="0">Automatico</ion-select-option>
           <ion-select-option [value]="12">1</ion-select-option>
           <ion-select-option [value]="6">2</ion-select-option>
           <ion-select-option [value]="4">3</ion-select-option>
