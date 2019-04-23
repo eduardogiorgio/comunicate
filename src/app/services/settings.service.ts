@@ -22,7 +22,7 @@ export class SettingsService {
     settginsDefault.columnsPerRow =  0; // 0 automatico
     settginsDefault.ShowCategories =  2; // hacer enum
     settginsDefault.ShowGroup = 2; // hacer enum
-    settginsDefault.showGroupAll =  false; // mostrar todos los grupos
+    settginsDefault.showGroupAll =  true; // mostrar todos los grupos
 
     settginsDefault.rateSpeek =  0.80; // volumen 0 a 1 utilizar  slider
     settginsDefault.localeSpeek = 'es-AR'; // idioma por defecto del dispositivo buscar
