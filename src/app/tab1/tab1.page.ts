@@ -18,6 +18,7 @@ import { SettingsService } from '../services/settings.service';
 import { ActionGroupService } from '../services/action-group.service';
 import { NoSelected } from '../models/no-selected';
 import { TourComponent } from '../tour/tour.component';
+import { ActionGroup } from '../models/action-group';
 
 
 
@@ -217,7 +218,93 @@ unselectedItem(item : Category | Group | Action | NoSelected){
      // if first time
      if(this.settings.isMyFirtView){
         this.showTour();
+        
+        // move to mocks or service for create default
+        const categoryPeople = new Category();
+        categoryPeople.id = 1;
+        categoryPeople.name = "Personas";
+        categoryPeople.icon = "people";
 
+        const groupFamily = new Group();
+        groupFamily.id = 1;
+        groupFamily.categoryId = categoryPeople.id;
+        groupFamily.name = "Familia";
+        groupFamily.sequence = undefined; // support version legacy
+        groupFamily.icon = "contacts";
+
+        const groupFriends = new Group();
+        groupFriends.id = 2;
+        groupFriends.categoryId = categoryPeople.id;
+        groupFriends.name = "Amigos";
+        groupFriends.sequence = undefined; // support version legacy
+        groupFriends.icon = "person";
+
+        const action1 = new Action();
+        action1.id = 1;
+        action1.categoryId = categoryPeople.id;
+        action1.name = "Papa";
+        action1.sequence = undefined; // support version legacy
+        action1.path='./assets/images/father-example.png' // image default
+
+        const action2 = new Action();
+        action2.id = 2;
+        action2.categoryId = categoryPeople.id;
+        action2.name = "Mama";
+        action2.sequence = undefined; // support version legacy
+        action2.path='./assets/images/mother-example.png' // image default
+
+        const action3 = new Action();
+        action3.id = 3;
+        action3.categoryId = categoryPeople.id;
+        action3.name = "Mi amigo";
+        action3.sequence = undefined; // support version legacy
+        action3.path='./assets/images/friend-example.png' // image default
+        
+        const categoryActivities = new Category();
+        categoryActivities.id = 2;
+        categoryActivities.name = "Actividades";
+        categoryActivities.icon = "bicycle";
+
+        const action4 = new Action();
+        action4.id = 4;
+        action4.categoryId = categoryActivities.id;
+        action4.name = "Andar en bicicleta";
+        action4.sequence = undefined; // support version legacy
+        action4.path='./assets/images/exercise-bicycle-example.png' // image default
+
+        let categories : Category[] = [];
+        categories.push(categoryPeople,categoryActivities);
+
+        let groups : Group[] = [];
+        groups.push(groupFamily,groupFriends);
+
+        let actions : Action[] = [];
+        actions.push(action1,action2,action3,action4);
+    
+        // relationships
+        const actiongroup1 = new ActionGroup();
+        actiongroup1.idAction = action1.id;
+        actiongroup1.idGroup = groupFamily.id;
+
+        const actiongroup2 = new ActionGroup();
+        actiongroup2.idAction = action2.id;
+        actiongroup2.idGroup = groupFamily.id;
+
+        const actiongroup3 = new ActionGroup();
+        actiongroup3.idAction = action3.id;
+        actiongroup3.idGroup = groupFriends.id;
+        
+        let actionsGroups : ActionGroup[] = [];
+        actionsGroups.push(actiongroup1);
+        actionsGroups.push(actiongroup2);
+        actionsGroups.push(actiongroup3);
+
+        this.categoryService.saveCategories(categories);
+        this.groupService.saveGroups(groups);
+        this.actionService.saveActions(actions);
+        this.actionGroupService.saveActionGroups(actionsGroups);
+
+        this.getCategories();
      }
    }
 
