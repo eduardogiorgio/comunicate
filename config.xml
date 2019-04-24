@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.egiorgio.comunicate" version="0.9.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.egiorgio.comunicate" version="0.9.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Comunicate</name>
     <description>Te permite comunicar a traves de tarjetas personalizables</description>
     <author email="eduardo.giorgio69@gmail.com" href="">Eduardo Adrian Giorgio</author>
