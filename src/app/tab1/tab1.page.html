@@ -36,7 +36,7 @@
     </ion-segment>
     <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide()">
       <ion-slide  *ngFor="let category of categories">
-          <app-category-detail [category]="category" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>
+          <app-category-detail [category]="category" class="allWith" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>
       </ion-slide>
     </ion-slides>
   
