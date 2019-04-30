@@ -1,9 +1,13 @@
 import { Group } from '../models/group';
 
 export const GROUPS: Group[] = [
-    { id: 1, name: 'Group 1', icon: 'home', categoryId: 1, sequence: 1},
-    { id: 2, name: 'Group 2', icon: 'heart', categoryId: 1, sequence: 2},
-    { id: 3, name: 'Group 3', icon: 'pin', categoryId: 2, sequence: 1},
-    { id: 4, name: 'Group 4', icon: 'star', categoryId: 2, sequence: 2},
-    { id: 5, name: 'Group 5', icon: 'call', categoryId: 3, sequence: 1}
+    { id: 1, name: 'Familia', icon: 'contacts', categoryId: 2, sequence: null},
+    { id: 2, name: 'Amigos', icon: 'contact', categoryId: 2, sequence: null},
+    { id: 3, name: 'Terapistas', icon: 'people', categoryId: 2, sequence: null},
+
+    { id: 4, name: 'Fuera casa', icon: 'football', categoryId: 3, sequence: null},
+    { id: 5, name: 'En casa', icon: 'home', categoryId: 3, sequence: null},
+
+    { id: 6, name: 'Bebidas', icon: 'pint', categoryId: 5, sequence: null},
+    { id: 7, name: 'Comida', icon: 'pizza', categoryId: 5, sequence: null}
 ];
