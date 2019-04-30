@@ -225,12 +225,12 @@ unselectedItem(item : Category | Group | Action | NoSelected){
         const categories = CATEGORIES;
         const groups = GROUPS;
         const actions = ACTIONS;
-        const ActionsGroups = ACTIONSGROUPS;
+        const actionsGroups = ACTIONSGROUPS;
 
         this.categoryService.saveCategories(categories);
         this.groupService.saveGroups(groups);
         this.actionService.saveActions(actions);
-        this.actionGroupService.saveActionGroups(ActionsGroups);
+        this.actionGroupService.saveActionGroups(actionsGroups);
 
         this.showTour();
         this.getCategories();
