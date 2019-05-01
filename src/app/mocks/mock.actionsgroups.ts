@@ -28,7 +28,6 @@ export const ACTIONSGROUPS: ActionGroup[] = [
 
     { idAction:22, idGroup: 7 },
     { idAction:23, idGroup: 7 },
-    { idAction:24, idGroup: 7 },
 
 
     
