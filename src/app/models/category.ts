@@ -2,6 +2,6 @@ export class Category {
     id: number;
     name: string;
     icon: string;
-    color: string = "blank";
+    color: string;
     // sequence: number;
 }
