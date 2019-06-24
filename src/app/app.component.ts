@@ -18,6 +18,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private categoryService: CategoryService
   ) {
     this.initializeApp();
   }
@@ -26,6 +27,8 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
        this.splashScreen.hide();
+       //TODO: temporal
+       this.categoryService.migrateVersion(); // migrar hasta que todos esten actualizados luego quietar
     });
   }
 }
