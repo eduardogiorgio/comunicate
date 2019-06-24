@@ -24,6 +24,7 @@ import { ActionEditComponent } from './action-edit/action-edit.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
 import { SelectIconComponent } from './select-icon/select-icon.component';
+import { SelectColorComponent } from './select-color/select-color.component';
 
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
@@ -42,8 +43,8 @@ import { TourComponent } from './tour/tour.component';
 //import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 @NgModule({
-  declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent, TourComponent],
-  entryComponents: [ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent,TourComponent],
+  declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent, TourComponent, SelectColorComponent],
+  entryComponents: [ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent,TourComponent, SelectColorComponent],
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule],
   providers: [
     StatusBar,

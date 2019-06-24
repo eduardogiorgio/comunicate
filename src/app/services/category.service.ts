@@ -63,4 +63,15 @@ export class CategoryService {
   saveCategories(categories: Category[]) {
     localStorage.setItem(this.CATEGORIES, JSON.stringify(categories));
   }
+
+  // si no tiene color le asigno por defecto el blanco.
+  // ver de hacerlo mejor
+  migrateVersion(){
+    const categories = this.loadCategories();
+    categories.forEach(x => {
+      if(!x.color)
+        x.color = "white"
+    });
+    this.saveCategories(categories);
+  }
 }

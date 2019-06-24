@@ -21,7 +21,7 @@
       </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content >
 
 
   <!-- (click)="unselectedItem(category)" (press)="editItem(category)" [class.latest-selected]="settings.editMode && category == latestSelected" -->
@@ -35,7 +35,7 @@
       <!--</ion-virtual-scroll>-->
     </ion-segment>
     <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide()">
-      <ion-slide  *ngFor="let category of categories">
+      <ion-slide  *ngFor="let category of categories" [style.background-color]="category.color">
           <app-category-detail [category]="category" class="allWith" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>
       </ion-slide>
     </ion-slides>

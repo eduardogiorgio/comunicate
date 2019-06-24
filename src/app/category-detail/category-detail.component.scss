@@ -1,4 +1,9 @@
 // color que cambia la imagen apretada
+.welcome-card{
+  background-color: #eee;
+  width: 100%;
+}
+
 .latest-selected {
     background-color: #cc0;
     color: #333;
@@ -6,7 +11,7 @@
 
     // color que cambia la imagen apretada
     .selected-action {
-      background-color: #ccc;
+      background-color: #888;
     } 
   
     .selected-action ion-card-content h2{
