@@ -31,9 +31,8 @@
         <ion-select-option [selected]="order === i" *ngFor="let cat of categories;index as i;"  [value]="i"><ion-icon [name]="cat.icon" item-left></ion-icon>{{cat.name}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item (click)="pushColorPage()">
+    <ion-item (click)="pushColorPage($event)">
       <ion-label>Color fondo</ion-label>
-      <!--<ion-icon [name]="categoryform.value.icon" item-left></ion-icon>-->
       <span class="dot" [style.background-color]="categoryform.value.color"></span>
     </ion-item>
     <div text-center>
