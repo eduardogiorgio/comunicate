@@ -56,6 +56,18 @@ export class Tab1Page implements OnInit {
     });
    }
 
+   // ver de hacer que no modifique el lugar del ion slider
+   centerSegment(event: any){
+      console.log(event);
+      //event.srcElement.scrollIntoView(false);
+      // center alingh :)
+      event.srcElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center'
+    });
+   }
+
 
   ngOnInit(): void {
     this.latestSelected = this.noSelected;
