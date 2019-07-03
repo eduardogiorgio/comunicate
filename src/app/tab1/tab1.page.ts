@@ -23,6 +23,7 @@ import { CATEGORIES } from '../mocks/mock.categories';
 import { GROUPS } from '../mocks/mock.groups';
 import { ACTIONS } from '../mocks/mock.actions';
 import { ACTIONSGROUPS } from '../mocks/mock.actionsgroups';
+import { RestoreData } from '../models/restore-data';
 
 
 
@@ -92,11 +93,8 @@ export class Tab1Page implements OnInit {
       }
 
     });
-    await modal.present();
-    const { data } = await modal.onDidDismiss();
-    if (data) {
-      this.refreshAll();
-    }
+
+    this.finishPage(modal);
   }
 
   addGroup() {
@@ -112,11 +110,8 @@ export class Tab1Page implements OnInit {
     }
 
    });
-    await modal.present();
-    const { data } = await modal.onDidDismiss();
-    if (data) {
-      this.refreshAll();
-    }
+
+   this.finishPage(modal);
   }
 
 addAction() {
@@ -130,14 +125,25 @@ async pushActionPage(action?: Action, categoryId?: number) {
     'action': action,
     'categoryId' : categoryId
   }
-
  });
+
+ this.finishPage(modal);
+
+}
+
+async finishPage(modal: HTMLIonModalElement){
+  // deberia hacer contramovimiento pero sino es muy pesado
+  const restoreData = this.generateRestoreData()
+
+  // recontrullo todo el estado anterior es mas facil que hacer las reversas
   await modal.present();
   const { data } = await modal.onDidDismiss();
   if (data) {
       this.refreshAll();
+      this.presentToastUndoChanges(restoreData);
   }
 }
+
 
 // si esta seleccionado cuando cmabia de cateoria selecciona otro
 categoryChangedIndex(index: any){
@@ -190,6 +196,8 @@ editItem(item : Category | Group | Action | NoSelected) {
 deleteItem(item : Category | Group | Action | NoSelected) {
   const type = this.detectedType(item);
   
+  const restoreData = this.generateRestoreData();
+
   if(type instanceof Category){
     this.categoryService.delete(item as Category);
     this.groupService.deleteGroupsByCategory((item as Category).id);
@@ -205,6 +213,7 @@ deleteItem(item : Category | Group | Action | NoSelected) {
  //reflection
   if(type instanceof Category || type instanceof Group || type instanceof Action){
     this.refreshAll();
+    this.presentToastUndoChanges(restoreData);
   }
 
   this.latestSelected = this.noSelected;
@@ -338,4 +347,43 @@ unselectedItem(item : Category | Group | Action | NoSelected){
       this.categories = this.categories;
     }
  
+
+    async presentToastUndoChanges(restoreData: RestoreData) {
+      const toast = await this.toastController.create({
+    
+        duration: 2000,
+        position: 'bottom',
+        buttons: [
+          {
+            side: 'end',
+            icon: 'undo',
+            text: 'Desacer',
+            handler: () => {
+              this.restoreData(restoreData);
+            }
+          }
+        ]
+      });
+      toast.present();
+    }
+
+    generateRestoreData(){
+      const restoreData = new RestoreData();
+      restoreData.categories = this.categoryService.loadCategories();
+      restoreData.groups     = this.groupService.loadGroups();
+      restoreData.actions    = this.actionService.loadActions();
+
+      return restoreData;
+    }
+
+    restoreData(restoreData : RestoreData){
+      console.log(restoreData);
+      if(!restoreData)
+        return;
+
+      this.categoryService.saveCategories(restoreData.categories);
+      this.groupService.saveGroups(restoreData.groups);
+      this.actionService.saveActions(restoreData.actions);
+      this.refreshAll();
+    }
 }
