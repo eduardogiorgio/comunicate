@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -39,13 +41,15 @@ import { SettingsService } from './services/settings.service';
 //hammer events
 import { IonicGestureConfig } from './gestures/ionic-gesture-config';
 import { TourComponent } from './tour/tour.component';
+import { ImageService } from './services/image.service';
+import { ImageListComponent } from './image-list/image-list.component';
 // supertabs
 //import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 @NgModule({
-  declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent, TourComponent, SelectColorComponent],
-  entryComponents: [ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent,TourComponent, SelectColorComponent],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule],
+  declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent, TourComponent, SelectColorComponent,ImageListComponent],
+  entryComponents: [ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent,TourComponent, SelectColorComponent,ImageListComponent],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule],
   providers: [
     StatusBar,
     SplashScreen,
@@ -53,6 +57,7 @@ import { TourComponent } from './tour/tour.component';
     GroupService,
     ActionService,
     SettingsService,
+    ImageService,
     // SQLite,
     Camera,
     PhotoLibrary,

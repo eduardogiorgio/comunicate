@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <!-- not working-->
+          <!--<ion-back-button></ion-back-button>-->
+          <ion-button (click)="dismiss()">
+            <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+      <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="searchImages(searchQuery)" showCancelButton="always"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<ion-grid>
+  <ion-row>
+    <ion-col *ngFor="let image of images; index as i; first as isFirst" [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
+        <ion-card class="welcome-card" style=" display: block;"  (click)="selectedImage(action);unselectedItem(action)">
+            <ion-img [src]="image.largeImageURL" onError="this.src='./assets/images/camera-icon.png';"></ion-img>
+            <ion-card-header>
+              <ion-card-title text-center>{{image.name}}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+    </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!--
+<ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
+-->
+<!--
+<ion-content>
+  <ion-card *ngFor=>
+    <img src="./madison.jpg" />
+    <ion-card-header>
+      <ion-card-subtitle>Destination</ion-card-subtitle>
+      <ion-card-title>Madison, WI</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+-->
+
+
+<!--
+<md-card>
+  <md-input-container>
+    <input class="search" mdInput [(ngModel)]="searchQuery"
+    name="search" placeholder="Search for images">
+  </md-input-container>
+  <br>
+  <button (click)="searchImages(searchQuery)"
+    md-raised-button class="searchButton" type="button">Find Images</button>
+</md-card>
+
+<div *ngIf="searching">
+  <md-progress-bar mode="indeterminate"></md-progress-bar>
+</div>
+
+<md-card>
+  <h4 *ngIf="imagesFound" md-subeader>Results</h4>
+  <masonry [useImagesLoaded]="true">
+    <masonry-brick *ngFor="let image of images" class=image-container>
+      <md-card>
+        <a href="{{ image.pageURL }}" target="_bank">
+          <md-card-header>
+            <div class="avatar" md-card-avatar [ngStyle]="{'background-image':'url('+ image.userImageURL +')', 'background-size':'40px 40px'}"></div>
+            <md-card-title>User: {{ image.user }}</md-card-title>
+          </md-card-header>
+          <img md-card-image src="{{image.webformatURL}}">
+          <md-card-content>
+            <p>Tags: {{ image.tags }}</p>
+            <p>Comments: {{ image.comments }}</p>
+            <p>Likes: {{ image.likes }}</p>
+          </md-card-content>
+        </a>
+      </md-card>
+      <br><br>
+    </masonry-brick>
+  </masonry>
+</md-card>
+-->

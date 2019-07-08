@@ -16,6 +16,7 @@ import { SettingsService } from '../services/settings.service';
 import { Settings } from '../models/settings';
 import { Category } from '../models/category';
 import { Group } from '../models/group';
+import { ImageListComponent } from '../image-list/image-list.component';
 
 @Component({
   selector: 'app-action-edit',
@@ -121,7 +122,12 @@ export class ActionEditComponent implements OnInit {
           handler: (blah) => {
             this.takePhotoWithSourceType(PictureSourceType.CAMERA);
           }
-        }
+        },
+      //  { text: 'Buscar internet',
+      //    handler: (blah) => {
+      //      this.takePhotoPixabay();
+      //    }
+      //  }
         ]
     });
 
@@ -210,6 +216,16 @@ export class ActionEditComponent implements OnInit {
     
     const actionFinal: Action = { id: 0, name: 'final', categoryId: value, path: '', sequence: this.actions.length };
     this.actions.push(actionFinal);
+  }
+
+  async takePhotoPixabay(){
+    const modal = await this.modalController.create({
+      component: ImageListComponent,
+      componentProps: {}
+     });
+      await modal.present();
+      await modal.onDidDismiss();
+      this.getSettings();
   }
 
 }
