@@ -14,21 +14,30 @@
 <ion-grid>
   <ion-row>
     <ion-col *ngFor="let image of images; index as i; first as isFirst" [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
-        <ion-card class="welcome-card" style=" display: block;"  (click)="selectedImage(action);unselectedItem(action)">
+        <ion-card class="welcome-card" style=" display: block;"  (click)="selectedImage(image)">
             <ion-img [src]="image.largeImageURL" onError="this.src='./assets/images/camera-icon.png';"></ion-img>
             <ion-card-header>
               <ion-card-title text-center>{{image.name}}</ion-card-title>
             </ion-card-header>
           </ion-card>
     </ion-col>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    
     </ion-row>
   </ion-grid>
+
+  
+
 </ion-content>
-<!--
-<ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
-  <ion-infinite-scroll-content></ion-infinite-scroll-content>
-</ion-infinite-scroll>
--->
+
+
+
 <!--
 <ion-content>
   <ion-card *ngFor=>

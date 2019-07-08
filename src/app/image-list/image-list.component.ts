@@ -10,6 +10,7 @@ import { Settings } from '../models/settings';
   styleUrls: ['./image-list.component.css']
 })
 export class ImageListComponent implements OnInit {
+  query: string;
   latestData : string;
   images: any[];
   imagesFound: boolean = false;
@@ -48,11 +49,12 @@ export class ImageListComponent implements OnInit {
 
  // esto ya estaria.
   searchImages(query: string){
+    this.query = query;
     this.searching = true;
     // limpia las imagenes si cambia el texto
     this.images =[];
 
-    return this._imageService.getImages(query,1,10).subscribe(
+    return this._imageService.getImages(this.query,1,10).subscribe(
       data => this.handleSuccess(data),
       error => this.handleError(error),
       () => this.searching = false
@@ -60,32 +62,28 @@ export class ImageListComponent implements OnInit {
   }
 
   // currentPage
-/*
+
  // oInfinite(query: string): Promise<any> {
-  oInfinite(query: string){
+  doInfinite(event : any){
+
     console.log('Begin async operation');
 
     this.searching = true;
-    return this._imageService.getImages(query,1,10).subscribe(
+    return this._imageService.getImages(this.query,1,10).subscribe(
       data => this.handleSuccess(data),
       error => this.handleError(error),
-      () => this.searching = false
+      () => {
+              this.searching = false;
+              event.target.complete();
+            }
     );
 
-    
-    //return new Promise((resolve) => {
-    //  setTimeout(() => {
-    //    for (var i = 0; i < 30; i++) {
-    //      this.items.push( this.items.length );
-    //    }
-//
-  //      console.log('Async operation has ended');
-   //     resolve();
-   //   }, 500);
-  //  })
-    
+   
   }
-  */
+
+  selectedImage(image: any){
+    console.log("text");
+  }
 
   dismiss() {
     this.modalController.dismiss();

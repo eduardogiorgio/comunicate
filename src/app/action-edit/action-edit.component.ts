@@ -123,11 +123,11 @@ export class ActionEditComponent implements OnInit {
             this.takePhotoWithSourceType(PictureSourceType.CAMERA);
           }
         },
-      //  { text: 'Buscar internet',
-      //    handler: (blah) => {
-      //      this.takePhotoPixabay();
-      //    }
-      //  }
+        { text: 'Buscar internet',
+          handler: (blah) => {
+            this.takePhotoPixabay();
+          }
+        }
         ]
     });
 
