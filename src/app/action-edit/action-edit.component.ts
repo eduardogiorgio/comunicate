@@ -123,11 +123,11 @@ export class ActionEditComponent implements OnInit {
             this.takePhotoWithSourceType(PictureSourceType.CAMERA);
           }
         },
-        { text: 'Buscar internet',
-          handler: (blah) => {
-            this.takePhotoPixabay();
-          }
-        }
+        //{ text: 'Buscar internet',
+        //  handler: (blah) => {
+        //    this.takePhotoPixabay();
+       //   }
+        //}
         ]
     });
 
@@ -146,26 +146,29 @@ export class ActionEditComponent implements OnInit {
 
     // funciona para las fotos nomas
     this.camera.getPicture(options).then((imageData) => {
-
-      this.crop.crop(imageData, {quality: 100})
-      .then(
-        newImage => {
-          newImage = newImage.slice(0, newImage.lastIndexOf('?'));
-          // remueve lo ultimo
-          this.photoLibrary.saveImage(newImage, 'comunicate')
-          .then((liberyItem: LibraryItem) => {
-            this.action.path = 'file://' + liberyItem.id.split(';')[1];
-            this.action.path = this.webView.convertFileSrc(this.action.path );
-          })
-          .catch((erro) => {
-            console.log(erro);
-          });
-        },
-        error => console.error('Error cropping image', error)
-      );
+        this.cropImage(imageData);
     }, (err) => {
     });
 
+  }
+
+  cropImage(imageData: any){
+    this.crop.crop(imageData, {quality: 100})
+    .then(
+      newImage => {
+        newImage = newImage.slice(0, newImage.lastIndexOf('?'));
+        // remueve lo ultimo
+        this.photoLibrary.saveImage(newImage, 'comunicate')
+        .then((liberyItem: LibraryItem) => {
+          this.action.path = 'file://' + liberyItem.id.split(';')[1];
+          this.action.path = this.webView.convertFileSrc(this.action.path );
+        })
+        .catch((erro) => {
+          console.log(erro);
+        });
+      },
+      error => console.error('Error cropping image', error)
+    );
   }
 
 
@@ -224,7 +227,11 @@ export class ActionEditComponent implements OnInit {
       componentProps: {}
      });
       await modal.present();
-      await modal.onDidDismiss();
+      const { data } = await modal.onDidDismiss();
+      if (data) {
+          this.cropImage(data);
+      }
+
       this.getSettings();
   }
 

@@ -46,6 +46,10 @@ import { ImageListComponent } from './image-list/image-list.component';
 // supertabs
 //import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { File } from '@ionic-native/file/ngx';
+
+
 @NgModule({
   declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent, TourComponent, SelectColorComponent,ImageListComponent],
   entryComponents: [ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent,TourComponent, SelectColorComponent,ImageListComponent],
@@ -64,6 +68,8 @@ import { ImageListComponent } from './image-list/image-list.component';
     Crop,
     TextToSpeech,
     WebView,
+    FileTransfer,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HAMMER_GESTURE_CONFIG,
