@@ -23,7 +23,7 @@
     <ion-row>
       <ion-col align-self-center [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
         <ion-card class="welcome-card" (click)="takePhoto()">
-          <ion-img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';"></ion-img>
+          <img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';" />
           <ion-card-header>
             <ion-card-title text-center>{{actionform.get('name').value}}</ion-card-title>
           </ion-card-header>

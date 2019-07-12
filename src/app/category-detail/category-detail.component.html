@@ -11,7 +11,7 @@
   <ion-row>
     <ion-col *ngFor="let action of actions | actionsByGroup:actionGroups; index as i; first as isFirst" [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
         <ion-card class="welcome-card" style=" display: block;" [class.selected-action]="!settings.editMode && action == actionSelected" [class.latest-selected]="settings.editMode && action == latestSelected" (click)="selectedAction(action);unselectedItem(action)" (press)="editItem(action)">
-            <ion-img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';"></ion-img>
+            <img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';" />
             <ion-card-header>
               <ion-card-title text-center>{{action.name}}</ion-card-title>
             </ion-card-header>
