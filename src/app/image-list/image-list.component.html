@@ -29,7 +29,7 @@
   <ion-row>
     <ion-col *ngFor="let image of images; index as i; first as isFirst" [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
         <ion-card class="welcome-card" style=" display: block;"  (click)="selectedImage(image)">
-            <img [src]="image.webformatURL" onError="this.src='./assets/images/camera-icon.png';" />>
+            <img [src]="image.webformatURL" onError="this.src='./assets/images/camera-icon.png';" />
             <ion-card-header>
               <ion-card-title text-center>{{image.name}}</ion-card-title>
             </ion-card-header>
