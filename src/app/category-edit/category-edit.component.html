@@ -1,43 +1,39 @@
-<ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <!-- not working-->
-            <!--<ion-back-button></ion-back-button>-->
-            <ion-button (click)="dismiss()">
-              <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-        <ion-buttons slot="secondary">
-            <ion-button (click)="initializateValidators()">
-              <ion-icon slot="icon-only" name="refresh"></ion-icon>
-            </ion-button>
+<form (ngSubmit)="onSubmit()" #categoryForm="ngForm" [formGroup]="categoryform" class="boxes-container">
+  <ion-header>
+      <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+              <ion-button (click)="dismiss()">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+              </ion-button>
           </ion-buttons>
+          <ion-buttons slot="secondary" class="ion-margin-end">
+            <ion-button size="large" [disabled]="!categoryForm.valid" type="submit" >
+              <h3>Finalizar</h3>
+            </ion-button>
+           </ion-buttons>
           <ion-title>Categoria</ion-title>
-    </ion-toolbar>
-</ion-header>
-<ion-content>
-  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm" [formGroup]="categoryform">
-    <ion-item>
-      <ion-label>Nombre</ion-label>
-      <ion-input formControlName="name" type="text" placeholder="nombre categoria" autofocus clearInput></ion-input>
-    </ion-item>
-    <ion-item (click)="pushIconPage()">
-      <ion-label>Icono</ion-label>
-      <ion-icon [name]="categoryform.value.icon" item-left></ion-icon>
-    </ion-item>
-    <ion-item>
-      <ion-label>Orden</ion-label>
-      <ion-select formControlName="order" interface="popover">
-        <ion-select-option [selected]="order === i" *ngFor="let cat of categories;index as i;"  [value]="i"><ion-icon [name]="cat.icon" item-left></ion-icon>{{cat.name}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item (click)="pushColorPage($event)">
-      <ion-label>Color fondo</ion-label>
-      <span class="dot" [style.background-color]="categoryform.value.color"></span>
-    </ion-item>
-    <div text-center>
-      <ion-button size="large" [disabled]="!categoryForm.valid" type="submit">Aceptar</ion-button>
-      <ion-button size="large" (click)="dismiss()" >Cancelar</ion-button>
-    </div>
-  </form>
-</ion-content>
+      </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label>Nombre</ion-label>
+        <ion-input formControlName="name" type="text" placeholder="nombre categoria" autofocus clearInput></ion-input>
+      </ion-item>
+      <ion-item (click)="pushIconPage()">
+        <ion-label>Icono</ion-label>
+        <ion-icon [name]="categoryform.value.icon" item-left></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>Orden</ion-label>
+        <ion-select formControlName="order" interface="popover">
+          <ion-select-option [selected]="order === i" *ngFor="let cat of categories;index as i;"  [value]="i"><ion-icon [name]="cat.icon" item-left></ion-icon>{{cat.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item (click)="pushColorPage($event)">
+        <ion-label>Color fondo</ion-label>
+        <span class="dot" [style.background-color]="categoryform.value.color"></span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</form>
