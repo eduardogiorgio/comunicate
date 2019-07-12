@@ -123,11 +123,11 @@ export class ActionEditComponent implements OnInit {
             this.takePhotoWithSourceType(PictureSourceType.CAMERA);
           }
         },
-        //{ text: 'Buscar internet',
-        //  handler: (blah) => {
-        //    this.takePhotoPixabay();
-       //   }
-        //}
+        { text: 'Buscar internet',
+          handler: (blah) => {
+            this.takePhotoPixabay();
+          }
+        }
         ]
     });
 
@@ -160,8 +160,9 @@ export class ActionEditComponent implements OnInit {
         // remueve lo ultimo
         this.photoLibrary.saveImage(newImage, 'comunicate')
         .then((liberyItem: LibraryItem) => {
-          this.action.path = 'file://' + liberyItem.id.split(';')[1];
-          this.action.path = this.webView.convertFileSrc(this.action.path );
+          const path = 'file://' + liberyItem.id.split(';')[1];
+          const pathConvert = this.webView.convertFileSrc(path ); 
+          this.action.path = pathConvert;
         })
         .catch((erro) => {
           console.log(erro);

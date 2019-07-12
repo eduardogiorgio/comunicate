@@ -86,26 +86,22 @@ export class ImageListComponent implements OnInit {
   }
 
   selectedImage(image: any){
-    /*
+
     const fileTransfer: FileTransferObject = this.transfer.create();
-    const url = image.largeImageURL;
-    //fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
-    fileTransfer.download(url, this.file.dataDirectory + 'image-cache').then((entry) => {
-      console.log(image.largeImageURL);
-      console.log('download complete: ' + entry.toURL());
+    //const url = image.largeImageURL;
+    const url = image.webformatURL; // es mas liviana
+    fileTransfer.download(url, this.file.dataDirectory + 'image-cache',true,{create: true, exclusive: false}).then((entry) => {
+      //console.log(image.largeImageURL);
+      //console.log('download complete: ' + entry.toURL());
+      
       // verificar que esto me de el archivo
-      this.modalController.dismiss(entry);
+      console.log(entry);
+      this.modalController.dismiss(entry.toURL());
     }, (error) => {
       console.log("error file transfer");
-      // por ahora retorno un mock
- 
-      // mostrar un error
-      // handle error
+
     });
-*/
-const archivo = image.largeImageURL;
-this.modalController.dismiss(archivo);
-    console.log("text");
+
   }
 
   dismiss() {
