@@ -1,8 +1,6 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
-            <!-- not working-->
-            <!--<ion-back-button></ion-back-button>-->
             <ion-button (click)="dismiss()">
               <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
             </ion-button>
@@ -23,7 +21,7 @@
     <ion-row>
       <ion-col align-self-center [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
         <ion-card class="welcome-card" (click)="takePhoto()">
-          <img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';" />
+          <img [src]="action.path" (error)="action.path = environment.ERROR_IMAGE_DEFAULT" />
           <ion-card-header>
             <ion-card-title text-center>{{actionform.get('name').value}}</ion-card-title>
           </ion-card-header>

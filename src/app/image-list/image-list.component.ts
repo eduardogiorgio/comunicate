@@ -5,6 +5,7 @@ import { SettingsService } from '../services/settings.service';
 import { Settings } from '../models/settings';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-image-list',
@@ -12,6 +13,7 @@ import { File } from '@ionic-native/file/ngx';
   styleUrls: ['./image-list.component.css']
 })
 export class ImageListComponent implements OnInit {
+  environment = environment;
   query: string;
   latestData : string;
   images: any[];

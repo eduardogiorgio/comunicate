@@ -11,6 +11,7 @@ import { ActionGroup } from '../models/action-group';
 import { NoSelected } from '../models/no-selected';
 import { Settings } from '../models/settings';
 import { TextToSpeech, TTSOptions } from '@ionic-native/text-to-speech/ngx';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-category-detail',
@@ -18,7 +19,7 @@ import { TextToSpeech, TTSOptions } from '@ionic-native/text-to-speech/ngx';
   styleUrls: ['./category-detail.component.scss']
 })
 export class CategoryDetailComponent implements OnInit {
-
+  environment = environment;
   
   
   noSelected: NoSelected;

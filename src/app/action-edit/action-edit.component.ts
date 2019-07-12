@@ -17,6 +17,7 @@ import { Settings } from '../models/settings';
 import { Category } from '../models/category';
 import { Group } from '../models/group';
 import { ImageListComponent } from '../image-list/image-list.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-action-edit',
@@ -24,7 +25,8 @@ import { ImageListComponent } from '../image-list/image-list.component';
   styleUrls: ['./action-edit.component.scss']
 })
 export class ActionEditComponent implements OnInit {
-
+  environment = environment;
+  
   categories: Category[];
   groups: Group[];
   groupsSelected: Group[];
@@ -88,7 +90,7 @@ export class ActionEditComponent implements OnInit {
       this.action = new Action();
       this.action.id = new Date().valueOf(); // genera el id unico;
       this.action.name = 'Mi nueva accion'; // multiidioma
-      this.action.path = './assets/images/camera-icon.png'; // default
+      this.action.path = environment.FOTO_IMAGE_DEFAULT; // default
       this.action.categoryId = this.categoryId;
       this.order = this.actions.length;
     } else {
