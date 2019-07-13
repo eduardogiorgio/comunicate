@@ -18,17 +18,11 @@
       color: black ;
       font-weight: bold;
     }
-  
-  ion-button div {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-  }
 
-  .button-selected {
+
+  .button-selected * {
     color: #222;
   } 
-  .latest-button-selected {
+  .latest-button-selected * {
     color: #cc0;
   } 
-  

@@ -1,11 +1,11 @@
+
 <div *ngIf="settings.showGroupAll">
-  <ion-button *ngFor="let group of groups" size="default" [class.button-selected]="groupedsSelected(group)" [class.latest-button-selected]="settings.editMode && group == latestSelected" (click)="groupChanged(group);" (press)="editItem(group)">
-    <div>
-        <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
-        {{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}
-    </div>
-  </ion-button>
+    <ion-button  fill="solid" color="primary" *ngFor="let group of groups" size="large" [class.button-selected]="groupedsSelected(group)" [class.latest-button-selected]="settings.editMode && group == latestSelected" (click)="groupChanged(group);" (press)="editItem(group)">
+      <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
+      <label>{{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}</label>
+    </ion-button>
 </div>
+
 
 <ion-grid>
   <ion-row>
