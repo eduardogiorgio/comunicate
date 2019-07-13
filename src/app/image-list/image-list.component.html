@@ -10,20 +10,9 @@
 </ion-header>
 <ion-content>
   <!-- skeleton loading shimming -->
-<ion-grid *ngIf="searching == true">
-  <ion-row>
-      <ion-col [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
-          <ion-card class="welcome-card" style=" display: block;"  (click)="selectedImage(image)">
-                <ion-skeleton-text style="min-height:100%; min-width: 100%" animated></ion-skeleton-text>
-        <ion-card-header>
-                <ion-card-title text-center><ion-skeleton-text animated></ion-skeleton-text></ion-card-title>
-              </ion-card-header>
-            </ion-card>
-          </ion-col>
-  </ion-row>
-</ion-grid>
+
 <!-- mostar no se encontraron resultados-->
-<ion-grid *ngIf="searching == false">
+<ion-grid >
   <ion-row>
     <ion-col *ngFor="let image of images; index as i; first as isFirst" [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
         <ion-card class="welcome-card" style=" display: block;"  (click)="selectedImage(image)">
@@ -34,18 +23,23 @@
           </ion-card>
     </ion-col>
 
-     
+     <!--
     <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
         loadingText="Loading more data...">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
-    
+    -->
     </ion-row>
   </ion-grid>
 
-  
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 </ion-content>
 
