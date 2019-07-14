@@ -9,37 +9,42 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  
   <!-- skeleton loading shimming -->
+  <!-- primera busqueda -->
+  <ion-grid *ngIf="searching && currentPage == 1">
+      <ion-row>
+        <ion-col *ngFor="let number of [].constructor(10)" [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
+            <ion-card class="welcome-card" style="height: 100%; width: 100%; display: block;">
+              <ion-skeleton-text animated  style="height: 100%; width: 100%;" ></ion-skeleton-text>
+            </ion-card>
+        </ion-col>
+        
+        </ion-row>
+      </ion-grid>
+  
+  <!-- mostar no se encontraron resultados-->
+  <div *ngIf="!searching && this.totalImages == 0" style="text-align: center">
+      <h1>No se encontraron resultados</h1>
+  </div>    
 
-<!-- mostar no se encontraron resultados-->
-<ion-grid >
+<ion-grid>
   <ion-row>
     <ion-col *ngFor="let image of images; index as i; first as isFirst" [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
         <ion-card class="welcome-card" style=" display: block;"  (click)="selectedImage(image)">
             <img [src]="image.webformatURL" (error)="action.path = environment.ERROR_IMAGE_DEFAULT" />
-            <ion-card-header>
-              <ion-card-title text-center>{{image.name}}</ion-card-title>
-            </ion-card-header>
           </ion-card>
     </ion-col>
-
-     <!--
     <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
-        loadingText="Loading more data...">
+        loadingText="Obteniendo mas fotos">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
-    -->
+
     </ion-row>
   </ion-grid>
 
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-      <ion-infinite-scroll-content
-        loadingSpinner="bubbles"
-        loadingText="Loading more data...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
 
 </ion-content>
 
