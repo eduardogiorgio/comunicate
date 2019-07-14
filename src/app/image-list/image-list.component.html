@@ -5,7 +5,7 @@
             <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
           </ion-button>
       </ion-buttons>
-      <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="searchImages(searchQuery)" showCancelButton="always"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="searchImages(searchQuery)"  animated="true" autocomplete="true" placeholder="escribe lo que deseas buscar" searchIcon="search"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content>
