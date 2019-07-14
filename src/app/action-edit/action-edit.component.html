@@ -20,7 +20,7 @@
     <ion-row>
       <ion-col [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
         <ion-card class="welcome-card" (click)="takePhoto()">
-          <img [src]="action.path" (error)="action.path = environment.ERROR_IMAGE_DEFAULT" />
+          <img [src]="actionForm.value.path" (error)="actionForm.value.path = environment.ERROR_IMAGE_DEFAULT" />
           <ion-card-header>
             <ion-card-title text-center>{{actionform.get('name').value}}</ion-card-title>
           </ion-card-header>

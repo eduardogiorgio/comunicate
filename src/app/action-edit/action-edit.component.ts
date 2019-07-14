@@ -80,6 +80,7 @@ export class ActionEditComponent implements OnInit {
     this.actionform = new FormGroup({
       name: new FormControl(this.action.name, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
       category: new FormControl(this.action.categoryId, [Validators.required]),
+      path: new FormControl(this.action.path),
       group: new FormControl(this.groupsSelected),
       order: new FormControl(this.order),
    });
@@ -164,7 +165,7 @@ export class ActionEditComponent implements OnInit {
         .then((liberyItem: LibraryItem) => {
           const path = 'file://' + liberyItem.id.split(';')[1];
           const pathConvert = this.webView.convertFileSrc(path ); 
-          this.action.path = pathConvert;
+          this.actionform.value.path =  pathConvert;
         })
         .catch((erro) => {
           console.log(erro);
@@ -197,7 +198,7 @@ export class ActionEditComponent implements OnInit {
     const action = new Action();
     action.id = this.action.id;
     action.name = this.actionform.get('name').value;
-    action.path = this.action.path;
+    action.path = this.actionform.value.path;
     action.sequence = this.action.sequence;
     action.categoryId = this.actionform.get('category').value;
     const order = this.actionform.get('order').value;
