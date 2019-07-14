@@ -1,17 +1,17 @@
+
 <div *ngIf="settings.showGroupAll">
-  <ion-button *ngFor="let group of groups" size="default" [class.button-selected]="groupedsSelected(group)" [class.latest-button-selected]="settings.editMode && group == latestSelected" (click)="groupChanged(group);" (press)="editItem(group)">
-    <div>
-        <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
-        {{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}
-    </div>
-  </ion-button>
+    <ion-button  fill="solid" color="primary" *ngFor="let group of groups" size="default" [class.button-selected]="groupedsSelected(group)" [class.latest-button-selected]="settings.editMode && group == latestSelected" (click)="groupChanged(group);" (press)="editItem(group)">
+      <ion-icon *ngIf="settings.ShowGroup == 0 || settings.ShowGroup == 2" [name]="group.icon"></ion-icon>
+      <label>{{settings.ShowGroup == 1 || settings.ShowGroup == 2 ? group.name  : ''}}</label>
+    </ion-button>
 </div>
+
 
 <ion-grid>
   <ion-row>
     <ion-col *ngFor="let action of actions | actionsByGroup:actionGroups; index as i; first as isFirst" [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
         <ion-card class="welcome-card" style=" display: block;" [class.selected-action]="!settings.editMode && action == actionSelected" [class.latest-selected]="settings.editMode && action == latestSelected" (click)="selectedAction(action);unselectedItem(action)" (press)="editItem(action)">
-            <img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';" />
+            <img [src]="action.path" (error)="action.path = environment.ERROR_IMAGE_DEFAULT" />
             <ion-card-header>
               <ion-card-title text-center>{{action.name}}</ion-card-title>
             </ion-card-header>

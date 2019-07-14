@@ -20,27 +20,25 @@
           </ion-button>
       </ion-buttons>
     </ion-toolbar>
+    <ion-toolbar>
+        <ion-segment #pageSegment [(ngModel)]="tabs" scrollable> <!-- not working scrolleable directive -->
+          <!--<ion-virtual-scroll [items]="categories">-->
+            <ion-segment-button *ngFor="let category of categories;let i = index" [value]="i" (ionSelect)="selectTab(i);unselectedItem(category);centerSegment($event)" [class.latest-selected]="settings.editMode && category == latestSelected"> 
+              <ion-icon *ngIf="settings.ShowCategories != 1"  [name]="category.icon"></ion-icon>
+              <ion-label *ngIf="settings.ShowCategories != 0">{{category.name}}</ion-label>
+            </ion-segment-button>
+          <!--</ion-virtual-scroll>-->
+        </ion-segment>
+    </ion-toolbar>
 </ion-header>
 <ion-content >
-
-
   <!-- (click)="unselectedItem(category)" (press)="editItem(category)" [class.latest-selected]="settings.editMode && category == latestSelected" -->
   
-    <ion-segment #pageSegment [(ngModel)]="tabs" scrollable> <!-- not working scrolleable directive -->
-      <!--<ion-virtual-scroll [items]="categories">-->
-        <ion-segment-button *ngFor="let category of categories;let i = index" [value]="i" (ionSelect)="selectTab(i);unselectedItem(category);centerSegment($event)" [class.latest-selected]="settings.editMode && category == latestSelected"> 
-          <ion-icon *ngIf="settings.ShowCategories != 1"  [name]="category.icon"></ion-icon>
-          <ion-label *ngIf="settings.ShowCategories != 0">{{category.name}}</ion-label>
-        </ion-segment-button>
-      <!--</ion-virtual-scroll>-->
-    </ion-segment>
     <ion-slides #pageSlider (ionSlideWillChange)="changeWillSlide($event)">
       <ion-slide  *ngFor="let category of categories" [style.background-color]="category.color">
           <app-category-detail [category]="category" class="allWith" [(latestSelected)]="latestSelected" [settings]="settings" (callEditing)="editItem($event)"></app-category-detail>
       </ion-slide>
     </ion-slides>
-  
-
   </ion-content>  
     <ion-fab *ngIf="settings.editMode" vertical="bottom" horizontal="end" class="ion-fab-extra-margin">
       <ion-fab-button>

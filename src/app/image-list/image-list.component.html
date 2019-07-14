@@ -1,109 +1,50 @@
 <ion-header>
   <ion-toolbar color="primary">
       <ion-buttons slot="start">
-          <!-- not working-->
-          <!--<ion-back-button></ion-back-button>-->
           <ion-button (click)="dismiss()">
             <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
           </ion-button>
       </ion-buttons>
-      <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="searchImages(searchQuery)" showCancelButton="always"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="searchImages(searchQuery)"  animated="true" autocomplete="true" placeholder="escribe lo que deseas buscar" searchIcon="search"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  
   <!-- skeleton loading shimming -->
-<ion-grid *ngIf="searching == true">
-  <ion-row>
-      <ion-col [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
-          <ion-card class="welcome-card" style=" display: block;"  (click)="selectedImage(image)">
-                <ion-skeleton-text style="min-height:100%; min-width: 100%" animated></ion-skeleton-text>
-        <ion-card-header>
-                <ion-card-title text-center><ion-skeleton-text animated></ion-skeleton-text></ion-card-title>
-              </ion-card-header>
+  <!-- primera busqueda -->
+  <ion-grid *ngIf="searching && currentPage == 1">
+      <ion-row>
+        <ion-col *ngFor="let number of [].constructor(10)" [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
+            <ion-card class="welcome-card" style="height: 100%; width: 100%; display: block;">
+              <ion-skeleton-text animated  style="height: 100%; width: 100%;" ></ion-skeleton-text>
             </ion-card>
-          </ion-col>
-  </ion-row>
-</ion-grid>
-<!-- mostar no se encontraron resultados-->
-<ion-grid *ngIf="searching == false">
+        </ion-col>
+        
+        </ion-row>
+      </ion-grid>
+  
+  <!-- mostar no se encontraron resultados-->
+  <div *ngIf="!searching && this.totalImages == 0" style="text-align: center">
+      <h1>No se encontraron resultados</h1>
+  </div>    
+
+<ion-grid>
   <ion-row>
     <ion-col *ngFor="let image of images; index as i; first as isFirst" [sizeXl]="settings.columnsPerRow || 2" [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4"  [sizeXs]="settings.columnsPerRow || 6">
         <ion-card class="welcome-card" style=" display: block;"  (click)="selectedImage(image)">
-            <img [src]="image.webformatURL" onError="this.src='./assets/images/camera-icon.png';" />
-            <ion-card-header>
-              <ion-card-title text-center>{{image.name}}</ion-card-title>
-            </ion-card-header>
+            <img [src]="image.webformatURL" (error)="action.path = environment.ERROR_IMAGE_DEFAULT" />
           </ion-card>
     </ion-col>
-
-     
     <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
-        loadingText="Loading more data...">
+        loadingText="Obteniendo mas fotos">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
-    
+
     </ion-row>
   </ion-grid>
 
-  
 
 </ion-content>
 
-
-
-<!--
-<ion-content>
-  <ion-card *ngFor=>
-    <img src="./madison.jpg" />
-    <ion-card-header>
-      <ion-card-subtitle>Destination</ion-card-subtitle>
-      <ion-card-title>Madison, WI</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
-    </ion-card-content>
-  </ion-card>
-</ion-content>
--->
-
-
-<!--
-<md-card>
-  <md-input-container>
-    <input class="search" mdInput [(ngModel)]="searchQuery"
-    name="search" placeholder="Search for images">
-  </md-input-container>
-  <br>
-  <button (click)="searchImages(searchQuery)"
-    md-raised-button class="searchButton" type="button">Find Images</button>
-</md-card>
-
-<div *ngIf="searching">
-  <md-progress-bar mode="indeterminate"></md-progress-bar>
-</div>
-
-<md-card>
-  <h4 *ngIf="imagesFound" md-subeader>Results</h4>
-  <masonry [useImagesLoaded]="true">
-    <masonry-brick *ngFor="let image of images" class=image-container>
-      <md-card>
-        <a href="{{ image.pageURL }}" target="_bank">
-          <md-card-header>
-            <div class="avatar" md-card-avatar [ngStyle]="{'background-image':'url('+ image.userImageURL +')', 'background-size':'40px 40px'}"></div>
-            <md-card-title>User: {{ image.user }}</md-card-title>
-          </md-card-header>
-          <img md-card-image src="{{image.webformatURL}}">
-          <md-card-content>
-            <p>Tags: {{ image.tags }}</p>
-            <p>Comments: {{ image.comments }}</p>
-            <p>Likes: {{ image.likes }}</p>
-          </md-card-content>
-        </a>
-      </md-card>
-      <br><br>
-    </masonry-brick>
-  </masonry>
-</md-card>
--->

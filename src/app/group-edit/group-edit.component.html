@@ -1,46 +1,40 @@
-<ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <!-- not working-->
-            <!--<ion-back-button></ion-back-button>-->
-            <ion-button (click)="dismiss()">
-              <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-        <ion-buttons slot="secondary">
-            <ion-button (click)="initializateValidators()">
-              <ion-icon slot="icon-only" name="refresh"></ion-icon>
-            </ion-button>
+<form (ngSubmit)="onSubmit()" #groupForm="ngForm" [formGroup]="groupform" class="boxes-container">
+  <ion-header>
+      <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+              <ion-button (click)="dismiss()">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+              </ion-button>
           </ion-buttons>
-          <ion-title>Grupo</ion-title>
-    </ion-toolbar>
-</ion-header>
-<ion-content>
-  <form (ngSubmit)="onSubmit()" #groupForm="ngForm" [formGroup]="groupform">
-    <ion-item>
-      <ion-label>Nombre</ion-label>
-      <ion-input formControlName="name" type="text" placeholder="nombre categoria" autofocus clearInput></ion-input>
-    </ion-item>
-    <ion-item (click)="pushIconPage()">
-        <ion-label>Icono</ion-label>
-        <ion-icon [name]="groupform.value.icon" item-left></ion-icon>
+          <ion-buttons slot="secondary">
+             <ion-button size="large" [disabled]="!groupForm.valid" type="submit">
+               <h3>Finalizar</h3>
+             </ion-button>
+          </ion-buttons>
+            <ion-title>Grupo</ion-title>
+      </ion-toolbar>
+  </ion-header>
+  <ion-content>
+      <ion-item>
+        <ion-label>Nombre</ion-label>
+        <ion-input formControlName="name" type="text" placeholder="nombre categoria" autofocus clearInput></ion-input>
       </ion-item>
-    <ion-item>
-        <ion-label>Acciones</ion-label>
-        <ion-select  multiple="true" formControlName="actions" interface="popover">
-          <ion-select-option *ngFor="let action of actions"  [value]="action">{{action.name}}</ion-select-option>
+      <ion-item (click)="pushIconPage()">
+          <ion-label>Icono</ion-label>
+          <ion-icon [name]="groupform.value.icon" item-left></ion-icon>
+        </ion-item>
+      <ion-item>
+          <ion-label>Acciones</ion-label>
+          <ion-select  multiple="true" formControlName="actions" interface="popover">
+            <ion-select-option *ngFor="let action of actions"  [value]="action">{{action.name}}</ion-select-option>
+          </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Orden</ion-label>
+        <ion-icon [name]="groupform.value.order" item-left></ion-icon>
+        <ion-select formControlName="order" interface="popover">
+          <ion-select-option [selected]="order === i" *ngFor="let gro of groups;index as i;"  [value]="i"><ion-icon [name]="gro.icon" item-left></ion-icon>{{gro.name}}</ion-select-option>
         </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Orden</ion-label>
-      <ion-icon [name]="groupform.value.order" item-left></ion-icon>
-      <ion-select formControlName="order" interface="popover">
-        <ion-select-option [selected]="order === i" *ngFor="let gro of groups;index as i;"  [value]="i"><ion-icon [name]="gro.icon" item-left></ion-icon>{{gro.name}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <div text-center>
-      <ion-button size="large" [disabled]="!groupForm.valid" type="submit">Aceptar</ion-button>
-      <ion-button size="large" (click)="dismiss()" >Cancelar</ion-button>
-    </div>
-  </form>
-</ion-content>
+      </ion-item>
+  </ion-content>
+</form>

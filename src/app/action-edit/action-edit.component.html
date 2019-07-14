@@ -1,60 +1,50 @@
+<form (ngSubmit)="onSubmit()" #actionForm="ngForm" [formGroup]="actionform" class="boxes-container">
 <ion-header>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
-            <!-- not working-->
-            <!--<ion-back-button></ion-back-button>-->
             <ion-button (click)="dismiss()">
               <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
             </ion-button>
         </ion-buttons>
         <ion-buttons slot="secondary">
-            <ion-button (click)="speechAction()">
-              <ion-icon slot="icon-only" name="play"></ion-icon>
-            </ion-button>
-            <ion-button (click)="initializateValidators()">
-              <ion-icon slot="icon-only" name="refresh"></ion-icon>
-            </ion-button>
+            <ion-buttons slot="secondary" class="ion-margin-end">
+                <ion-button size="large" [disabled]="!actionForm.valid" type="submit" >
+                  <h3>Finalizar</h3>
+                </ion-button>
+               </ion-buttons>
           </ion-buttons>
           <ion-title>Accion</ion-title>
     </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form (ngSubmit)="onSubmit()" #actionForm="ngForm" [formGroup]="actionform">
     <ion-row>
-      <ion-col align-self-center [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
+      <ion-col [sizeLg]="settings.columnsPerRow || 2" [sizeMd]="settings.columnsPerRow || 3" [sizeSm]="settings.columnsPerRow || 4" [sizeXl]="settings.columnsPerRow || 4" [sizeXs]="settings.columnsPerRow || 6">
         <ion-card class="welcome-card" (click)="takePhoto()">
-          <img [src]="action.path" onError="this.src='./assets/images/camera-icon.png';" />
+          <img [src]="actionForm.value.path" (error)="actionForm.value.path = environment.ERROR_IMAGE_DEFAULT" />
           <ion-card-header>
             <ion-card-title text-center>{{actionform.get('name').value}}</ion-card-title>
           </ion-card-header>
         </ion-card>
       </ion-col>
     </ion-row>
-
     <ion-item>
       <ion-label>Nombre</ion-label>
       <ion-input formControlName="name" type="text" placeholder="nombre categoria" autofocus clearInput></ion-input>
+      <ion-button (click)="speechAction()">
+        <ion-icon slot="icon-only" name="play"></ion-icon>
+      </ion-button>
     </ion-item>
-
     <ion-item>
         <ion-label>Categoria</ion-label>
-        <!--<ion-icon [name]="actionform.value.category" item-left></ion-icon>-->
         <ion-select formControlName="category" interface="popover" (ionChange)="categoryChanged()">
           <ion-select-option [selected]="action.categoryId == category.id" *ngFor="let category of categories"  [value]="category.id"><ion-icon [name]="category.name" item-left></ion-icon>{{category.name}}</ion-select-option>
         </ion-select>
     </ion-item>
-
     <ion-item>
         <ion-label>Orden</ion-label>
-        <!--<ion-icon [name]="actionform.value.category" item-left></ion-icon>-->
         <ion-select formControlName="order" interface="popover">
           <ion-select-option [selected]="order === i" *ngFor="let act of actions;index as i;"  [value]="i"  [value]="i">{{act.name}}</ion-select-option>
         </ion-select>
     </ion-item>
-
-    <div text-center>
-      <ion-button size="large" [disabled]="!actionForm.valid" type="submit">Aceptar</ion-button>
-      <ion-button size="large" (click)="dismiss()" >Cancelar</ion-button>
-    </div>
-  </form>
-</ion-content>
+ </ion-content>
+</form>

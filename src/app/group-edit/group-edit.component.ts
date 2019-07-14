@@ -78,7 +78,7 @@ export class GroupEditComponent implements OnInit {
     if (!this.group && this.categoryId) {
       this.group = new Group();
       this.group.id = new Date().valueOf(); // genera el id unico
-      this.group.name = 'Mi nuevo grupo';
+      this.group.name = '';
       this.group.icon = 'add-circle';
       this.group.categoryId = this.categoryId;
       this.order = this.groups.length;

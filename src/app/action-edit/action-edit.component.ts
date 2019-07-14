@@ -17,6 +17,7 @@ import { Settings } from '../models/settings';
 import { Category } from '../models/category';
 import { Group } from '../models/group';
 import { ImageListComponent } from '../image-list/image-list.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-action-edit',
@@ -24,7 +25,8 @@ import { ImageListComponent } from '../image-list/image-list.component';
   styleUrls: ['./action-edit.component.scss']
 })
 export class ActionEditComponent implements OnInit {
-
+  environment = environment;
+  
   categories: Category[];
   groups: Group[];
   groupsSelected: Group[];
@@ -78,6 +80,7 @@ export class ActionEditComponent implements OnInit {
     this.actionform = new FormGroup({
       name: new FormControl(this.action.name, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
       category: new FormControl(this.action.categoryId, [Validators.required]),
+      path: new FormControl(this.action.path),
       group: new FormControl(this.groupsSelected),
       order: new FormControl(this.order),
    });
@@ -87,8 +90,8 @@ export class ActionEditComponent implements OnInit {
     if (!this.action && this.categoryId) {
       this.action = new Action();
       this.action.id = new Date().valueOf(); // genera el id unico;
-      this.action.name = 'Mi nueva accion'; // multiidioma
-      this.action.path = './assets/images/camera-icon.png'; // default
+      this.action.name = ''; // multiidioma
+      this.action.path = environment.FOTO_IMAGE_DEFAULT; // default
       this.action.categoryId = this.categoryId;
       this.order = this.actions.length;
     } else {
@@ -162,7 +165,7 @@ export class ActionEditComponent implements OnInit {
         .then((liberyItem: LibraryItem) => {
           const path = 'file://' + liberyItem.id.split(';')[1];
           const pathConvert = this.webView.convertFileSrc(path ); 
-          this.action.path = pathConvert;
+          this.actionform.value.path =  pathConvert;
         })
         .catch((erro) => {
           console.log(erro);
@@ -195,7 +198,7 @@ export class ActionEditComponent implements OnInit {
     const action = new Action();
     action.id = this.action.id;
     action.name = this.actionform.get('name').value;
-    action.path = this.action.path;
+    action.path = this.actionform.value.path;
     action.sequence = this.action.sequence;
     action.categoryId = this.actionform.get('category').value;
     const order = this.actionform.get('order').value;

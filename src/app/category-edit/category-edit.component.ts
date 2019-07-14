@@ -46,7 +46,7 @@ export class CategoryEditComponent implements OnInit {
     if (!this.category) {
       this.category = new Category();
       this.category.id = new Date().valueOf(); // genera el id unico
-      this.category.name = 'Mi nueva categoria';
+      this.category.name = '';
       this.category.icon = 'add-circle';
       this.order = this.categories.length;
       this.category.color = "white";
