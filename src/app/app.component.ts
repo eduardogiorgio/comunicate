@@ -27,8 +27,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
        this.splashScreen.hide();
-       //TODO: temporal
-       this.categoryService.migrateVersion(); // migrar hasta que todos esten actualizados luego quietar
+    
     });
   }
 }

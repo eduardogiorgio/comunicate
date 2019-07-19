@@ -8,7 +8,7 @@ import { ActionService } from '../services/action.service';
 import { Action } from '../models/action';
 
 import { Storage } from '@ionic/storage';
-import { ModalController, AlertController, ToastController,IonSlides } from '@ionic/angular';
+import { ModalController, AlertController, ToastController,IonSlides, NavController } from '@ionic/angular';
 import { ActionEditComponent } from '../action-edit/action-edit.component';
 import { GroupEditComponent } from '../group-edit/group-edit.component';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
@@ -39,6 +39,7 @@ export class Tab1Page implements OnInit {
              private modalController: ModalController, private alertController: AlertController,
              public toastController: ToastController) {}
 
+             @ViewChild('rootNavController') nav: NavController;
   settings: Settings;
   categories: Category[];
   
