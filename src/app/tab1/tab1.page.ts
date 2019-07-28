@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category';
@@ -37,7 +37,7 @@ export class Tab1Page implements OnInit {
              private groupService: GroupService, private actionGroupService: ActionGroupService,
              private actionService: ActionService, private settingsService: SettingsService,
              private modalController: ModalController, private alertController: AlertController,
-             public toastController: ToastController) {}
+             public toastController: ToastController,private ref: ChangeDetectorRef) {}
 
              @ViewChild('rootNavController') nav: NavController;
   settings: Settings;
@@ -140,8 +140,9 @@ async finishPage(modal: HTMLIonModalElement){
   await modal.present();
   const { data } = await modal.onDidDismiss();
   if (data) {
-      this.refreshAll();
-      this.presentToastUndoChanges(restoreData);
+     // this.refreshAll();
+    this.ref.detectChanges();
+    this.presentToastUndoChanges(restoreData);
   }
 }
 
