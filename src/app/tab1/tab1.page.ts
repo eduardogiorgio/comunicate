@@ -140,9 +140,8 @@ async finishPage(modal: HTMLIonModalElement){
   await modal.present();
   const { data } = await modal.onDidDismiss();
   if (data) {
-     // this.refreshAll();
-    this.ref.detectChanges();
-    this.presentToastUndoChanges(restoreData);
+      this.refreshAll();
+      this.presentToastUndoChanges(restoreData);
   }
 }
 
@@ -336,17 +335,17 @@ unselectedItem(item : Category | Group | Action | NoSelected){
     }
     
     
-    //TODO: ver mejorrr
-    //reflection 
+    
     refreshAll(){
       //reflection
       this.getCategories();
       // TODO: ver de hacer que refresque mejor por el cambio de id
       // necesario
-      if(this.categories[0]){
-        this.categories[0] = this.categories.find(x => x.id == this.categories[0].id)
-      }
-      this.categories = this.categories;
+      //if(this.categories[0]){
+      //  this.categories[0] = this.categories.find(x => x.id == this.categories[0].id)
+      //}
+      //this.categories = this.categories;
+      this.ref.detectChanges();
     }
  
 
