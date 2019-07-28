@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Action } from '../models/action';
 import { ActionService } from '../services/action.service';
 import { GroupService } from '../services/group.service';
@@ -48,7 +48,8 @@ export class ActionEditComponent implements OnInit {
               private categoryService: CategoryService,
               private settingsService: SettingsService,
               private photoLibrary: PhotoLibrary,
-              private webView: WebView) { }
+              private webView: WebView,
+              private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getCategories();
@@ -165,7 +166,10 @@ export class ActionEditComponent implements OnInit {
         .then((liberyItem: LibraryItem) => {
           const path = 'file://' + liberyItem.id.split(';')[1];
           const pathConvert = this.webView.convertFileSrc(path ); 
-          this.actionform.value.path =  pathConvert;
+          //this.actionform.value.path =  pathConvert;
+          this.actionform.controls["path"].setValue(pathConvert);
+          this.ref.detectChanges(); // reflection :)
+          
         })
         .catch((erro) => {
           console.log(erro);
