@@ -33,7 +33,7 @@
         <ion-label>Orden</ion-label>
         <ion-icon [name]="groupform.value.order" item-left></ion-icon>
         <ion-select formControlName="order" interface="popover">
-          <ion-select-option [selected]="order === i" *ngFor="let gro of groups;index as i;"  [value]="i"><ion-icon [name]="gro.icon" item-left></ion-icon>{{gro.name}}</ion-select-option>
+          <ion-select-option *ngFor="let gro of groups;index as i;"  [value]="i"><ion-icon [name]="gro.icon" item-left></ion-icon>{{gro.name}}</ion-select-option>
         </ion-select>
       </ion-item>
   </ion-content>

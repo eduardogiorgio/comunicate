@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ViewChild, OnInit, Component } from '@angular/core';
 import { ImageService } from '../services/image.service';
 import { ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { SettingsService } from '../services/settings.service';
@@ -27,7 +27,7 @@ export class ImageListComponent implements OnInit {
   //TODO: que valla en un modulo asi es mas facil de manejar
   //grasycale imagen mientras no termine  para que paresca que carga mas rapido
 
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonInfiniteScroll, {static: false}) infiniteScroll: IonInfiniteScroll;
   
   settings: Settings;
 

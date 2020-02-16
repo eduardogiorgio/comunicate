@@ -37,13 +37,13 @@
     <ion-item>
         <ion-label>Categoria</ion-label>
         <ion-select formControlName="category" interface="popover" (ionChange)="categoryChanged()">
-          <ion-select-option [selected]="action.categoryId == category.id" *ngFor="let category of categories"  [value]="category.id"><ion-icon [name]="category.name" item-left></ion-icon>{{category.name}}</ion-select-option>
+          <ion-select-option *ngFor="let category of categories"  [value]="category.id"><ion-icon [name]="category.name" item-left></ion-icon>{{category.name}}</ion-select-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Orden</ion-label>
         <ion-select formControlName="order" interface="popover">
-          <ion-select-option [selected]="order === i" *ngFor="let act of actions;index as i;"  [value]="i"  [value]="i">{{act.name}}</ion-select-option>
+          <ion-select-option *ngFor="let act of actions;index as i;"  [value]="i">{{act.name}}</ion-select-option>
         </ion-select>
     </ion-item>
  </ion-content>

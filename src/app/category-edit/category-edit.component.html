@@ -27,7 +27,7 @@
       <ion-item>
         <ion-label>Orden</ion-label>
         <ion-select formControlName="order" interface="popover">
-          <ion-select-option [selected]="order === i" *ngFor="let cat of categories;index as i;"  [value]="i"><ion-icon [name]="cat.icon" item-left></ion-icon>{{cat.name}}</ion-select-option>
+          <ion-select-option *ngFor="let cat of categories;index as i;"  [value]="i"><ion-icon [name]="cat.icon" item-left></ion-icon>{{cat.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item (click)="pushColorPage($event)">

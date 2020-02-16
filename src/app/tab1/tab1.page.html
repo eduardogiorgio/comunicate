@@ -11,19 +11,19 @@
             <ion-icon slot="icon-only" name="settings"></ion-icon>
           </ion-button>
           <ion-button (click)="lock()" >
-            <ion-icon slot="icon-only" name="unlock"></ion-icon>
+            <ion-icon slot="icon-only" name="lock-open"></ion-icon>
           </ion-button>
       </ion-buttons>
       <ion-buttons *ngIf="!settings.editMode" slot="end">
           <ion-button (click)="checkAndUnLock()">
-            <ion-icon slot="icon-only" name="lock"></ion-icon>
+            <ion-icon slot="icon-only" name="lock-closed"></ion-icon>
           </ion-button>
       </ion-buttons>
     </ion-toolbar>
     <ion-toolbar>
         <ion-segment #pageSegment [(ngModel)]="tabs" scrollable> <!-- not working scrolleable directive -->
           <!--<ion-virtual-scroll [items]="categories">-->
-            <ion-segment-button *ngFor="let category of categories;let i = index" [value]="i" (ionSelect)="selectTab(i);unselectedItem(category);centerSegment($event)" [class.latest-selected]="settings.editMode && category == latestSelected"> 
+            <ion-segment-button *ngFor="let category of categories;let i = index" [value]="i" (click)="selectTab(i);unselectedItem(category);centerSegment($event)" [class.latest-selected]="settings.editMode && category == latestSelected"> 
               <ion-icon *ngIf="settings.ShowCategories != 1"  [name]="category.icon"></ion-icon>
               <ion-label *ngIf="settings.ShowCategories != 0">{{category.name}}</ion-label>
             </ion-segment-button>

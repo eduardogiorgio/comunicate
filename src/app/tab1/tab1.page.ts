@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { OnInit, Component, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category';
@@ -39,7 +39,7 @@ export class Tab1Page implements OnInit {
              private modalController: ModalController, private alertController: AlertController,
              public toastController: ToastController,private ref: ChangeDetectorRef) {}
 
-             @ViewChild('rootNavController') nav: NavController;
+             @ViewChild('rootNavController', {static: false}) nav: NavController;
   settings: Settings;
   categories: Category[];
   
@@ -47,9 +47,10 @@ export class Tab1Page implements OnInit {
   noSelected: NoSelected;
 
   
-  @ViewChild('pageSlider') pageSlider: IonSlides;
+  @ViewChild('pageSlider', {static: false}) pageSlider: IonSlides;
   tabs: string = "0";
   selectTab(index) {
+    console.log(index);
     this.pageSlider.slideTo(index);
   }
   changeWillSlide() {
@@ -327,9 +328,18 @@ unselectedItem(item : Category | Group | Action | NoSelected){
     async presentToastErrorPassword() {
       const toast = await this.toastController.create({
         message: 'Contraseña incorrecta',
-        showCloseButton: true,
         position: 'top',
-        closeButtonText: 'Done'
+        buttons: [
+          {
+            text: 'Aceptar',
+            role: 'cancel',
+            handler: () => {
+              console.log('Close clicked');
+            }
+          }
+        ]
+        //showCloseButton: true,
+        //closeButtonText: 'Done'
       });
       toast.present();
     }
@@ -356,8 +366,8 @@ unselectedItem(item : Category | Group | Action | NoSelected){
         position: 'bottom',
         buttons: [
           {
-            side: 'end',
-            icon: 'undo',
+            side: 'start',
+            icon: 'arrow-undo',
             text: 'Desacer',
             handler: () => {
               this.restoreData(restoreData);

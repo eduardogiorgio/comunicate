@@ -1,8 +1,8 @@
 import { Group } from '../models/group';
 
 export const GROUPS: Group[] = [
-    { id: 1, name: 'Familia', icon: 'contacts', categoryId: 2, sequence: null},
-    { id: 2, name: 'Amigos', icon: 'contact', categoryId: 2, sequence: null},
+    { id: 1, name: 'Familia', icon: 'people-circle', categoryId: 2, sequence: null},
+    { id: 2, name: 'Amigos', icon: 'person', categoryId: 2, sequence: null},
     { id: 3, name: 'Terapistas', icon: 'people', categoryId: 2, sequence: null},
 
     { id: 4, name: 'Fuera casa', icon: 'football', categoryId: 3, sequence: null},
