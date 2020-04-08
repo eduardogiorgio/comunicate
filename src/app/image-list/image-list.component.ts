@@ -27,7 +27,7 @@ export class ImageListComponent implements OnInit {
   //TODO: que valla en un modulo asi es mas facil de manejar
   //grasycale imagen mientras no termine  para que paresca que carga mas rapido
 
-  @ViewChild(IonInfiniteScroll, {static: false}) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   
   settings: Settings;
 

@@ -39,7 +39,7 @@ export class Tab1Page implements OnInit {
              private modalController: ModalController, private alertController: AlertController,
              public toastController: ToastController,private ref: ChangeDetectorRef) {}
 
-             @ViewChild('rootNavController', {static: false}) nav: NavController;
+             @ViewChild('rootNavController') nav: NavController;
   settings: Settings;
   categories: Category[];
   
@@ -47,7 +47,7 @@ export class Tab1Page implements OnInit {
   noSelected: NoSelected;
 
   
-  @ViewChild('pageSlider', {static: false}) pageSlider: IonSlides;
+  @ViewChild('pageSlider') pageSlider: IonSlides;
   tabs: string = "0";
   selectTab(index) {
     console.log(index);
