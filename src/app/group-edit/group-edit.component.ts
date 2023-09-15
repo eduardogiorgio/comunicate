@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { Group } from '../models/group';
 import { GroupService } from '../services/group.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { ActionService } from '../services/action.service';
 import { Action } from '../models/action';
@@ -20,7 +20,7 @@ export class GroupEditComponent implements OnInit {
   actions: Action[];
   actionsSelected: Action[];
   groups: Group[];
-  groupform: FormGroup;
+  groupform: UntypedFormGroup;
   @Input() group?: Group;
   @Input() categoryId?: number;
 
@@ -55,11 +55,11 @@ export class GroupEditComponent implements OnInit {
   }
 
   initializateValidators() {
-    this.groupform = new FormGroup({
-      name: new FormControl(this.group.name, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      icon: new FormControl(this.group.icon, Validators.required),
-      order: new FormControl(this.order, Validators.required),
-      actions: new FormControl(this.actionsSelected),
+    this.groupform = new UntypedFormGroup({
+      name: new UntypedFormControl(this.group.name, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      icon: new UntypedFormControl(this.group.icon, Validators.required),
+      order: new UntypedFormControl(this.order, Validators.required),
+      actions: new UntypedFormControl(this.actionsSelected),
    });
   }
 

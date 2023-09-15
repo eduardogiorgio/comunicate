@@ -3,7 +3,7 @@ import { Action } from '../models/action';
 import { ActionService } from '../services/action.service';
 import { GroupService } from '../services/group.service';
 import { CategoryService } from '../services/category.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { ModalController, AlertController } from '@ionic/angular';
 
 
@@ -34,7 +34,7 @@ export class ActionEditComponent implements OnInit {
 
   order: number;
   settings: Settings;
-  actionform: FormGroup;
+  actionform: UntypedFormGroup;
   @Input() action?: Action;
   @Input() categoryId?: number;
 
@@ -78,12 +78,12 @@ export class ActionEditComponent implements OnInit {
   }
 
   initializateValidators() {
-    this.actionform = new FormGroup({
-      name: new FormControl(this.action.name, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      category: new FormControl(this.action.categoryId, [Validators.required]),
-      path: new FormControl(this.action.path),
-      group: new FormControl(this.groupsSelected),
-      order: new FormControl(this.order),
+    this.actionform = new UntypedFormGroup({
+      name: new UntypedFormControl(this.action.name, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      category: new UntypedFormControl(this.action.categoryId, [Validators.required]),
+      path: new UntypedFormControl(this.action.path),
+      group: new UntypedFormControl(this.groupsSelected),
+      order: new UntypedFormControl(this.order),
    });
   }
 

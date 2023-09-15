@@ -51,32 +51,30 @@ import { File } from '@ionic-native/file/ngx';
 
 
 @NgModule({
-  declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent, TourComponent, SelectColorComponent,ImageListComponent],
-  entryComponents: [ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent,SelectIconComponent,TourComponent, SelectColorComponent,ImageListComponent],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    CategoryService,
-    GroupService,
-    ActionService,
-    SettingsService,
-    ImageService,
-    // SQLite,
-    Camera,
-    PhotoLibrary,
-    Crop,
-    TextToSpeech,
-    WebView,
-    FileTransfer,
-    File,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    {
-      provide: HAMMER_GESTURE_CONFIG,
-      useClass: IonicGestureConfig
-    },
-    
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent, ActionEditComponent, GroupEditComponent, CategoryEditComponent, SettingsComponent, SelectIconComponent, TourComponent, SelectColorComponent, ImageListComponent],
+    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        CategoryService,
+        GroupService,
+        ActionService,
+        SettingsService,
+        ImageService,
+        // SQLite,
+        Camera,
+        PhotoLibrary,
+        Crop,
+        TextToSpeech,
+        WebView,
+        FileTransfer,
+        File,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        {
+            provide: HAMMER_GESTURE_CONFIG,
+            useClass: IonicGestureConfig
+        },
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

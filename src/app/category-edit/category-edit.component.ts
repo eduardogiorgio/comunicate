@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { Category } from '../models/category';
 import { CategoryService } from '../services/category.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { ICONS } from '../mocks/mock.icons';
 import { SelectIconComponent } from '../select-icon/select-icon.component';
@@ -17,7 +17,7 @@ export class CategoryEditComponent implements OnInit {
 
   order: number;
   categories: Category[];
-  categoryform: FormGroup;
+  categoryform: UntypedFormGroup;
   @Input() category?: Category;
 
   icons = ICONS;
@@ -34,11 +34,11 @@ export class CategoryEditComponent implements OnInit {
     this.categories = this.categoryService.loadCategories();
   }
   initializateValidators() {
-    this.categoryform = new FormGroup({
-      name: new FormControl(this.category.name, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      icon: new FormControl(this.category.icon, Validators.required),
-      order: new FormControl(this.order, Validators.required),
-      color: new FormControl(this.category.color, [Validators.required])
+    this.categoryform = new UntypedFormGroup({
+      name: new UntypedFormControl(this.category.name, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      icon: new UntypedFormControl(this.category.icon, Validators.required),
+      order: new UntypedFormControl(this.order, Validators.required),
+      color: new UntypedFormControl(this.category.color, [Validators.required])
    });
   }
 
