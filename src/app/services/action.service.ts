@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage-angular';
 import { Action } from '../models/action';
 
 

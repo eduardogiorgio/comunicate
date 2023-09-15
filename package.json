@@ -13,12 +13,12 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^15.2.9",
-    "@angular/core": "^15.2.9",
-    "@angular/forms": "^15.2.9",
-    "@angular/platform-browser": "^15.2.9",
-    "@angular/platform-browser-dynamic": "^15.2.9",
-    "@angular/router": "^15.2.9",
+    "@angular/common": "^16.2.5",
+    "@angular/core": "^16.2.5",
+    "@angular/forms": "^16.2.5",
+    "@angular/platform-browser": "^16.2.5",
+    "@angular/platform-browser-dynamic": "^16.2.5",
+    "@angular/router": "^16.2.5",
     "@ionic-native/camera": "^5.36.0",
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/crop": "^5.36.0",
@@ -31,7 +31,10 @@
     "@ionic-native/status-bar": "5.36.0",
     "@ionic-native/text-to-speech": "^5.36.0",
     "@ionic/angular": "^6.7.5",
-    "@ionic/storage": "^2.2.0",
+    "@ionic/angular-server": "^6.7.5",
+    "@ionic/cordova-builders": "^10.0.0",
+    "@ionic/storage": "^4.0.0",
+    "@ionic/storage-angular": "^4.0.0",
     "cordova-android": "7.1.4",
     "cordova-browser": "6.0.0",
     "cordova-plugin-camera": "4.1.0",
@@ -53,21 +56,20 @@
     "rxjs": "^6.5.0",
     "tslib": "^2.0.0",
     "web": "0.0.2",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.13.3"
   },
   "devDependencies": {
-    "@angular-devkit/architect": "^0.1502.9",
-    "@angular-devkit/build-angular": "^15.2.9",
-    "@angular-devkit/core": "^15.2.9",
-    "@angular-devkit/schematics": "^15.2.9",
-    "@angular/cli": "^15.2.9",
-    "@angular/compiler": "^15.2.9",
-    "@angular/compiler-cli": "^15.2.9",
-    "@angular/language-service": "^15.2.9",
-    "@ionic/angular-toolkit": "^2.1.2",
+    "@angular-devkit/architect": "^0.1602.2",
+    "@angular-devkit/build-angular": "^16.2.2",
+    "@angular-devkit/core": "^16.2.2",
+    "@angular-devkit/schematics": "^16.2.2",
+    "@angular/cli": "^16.2.2",
+    "@angular/compiler": "^16.2.5",
+    "@angular/compiler-cli": "^16.2.5",
+    "@angular/language-service": "^16.2.5",
+    "@ionic/angular-toolkit": "^10.0.0",
     "@ionic/lab": "2.0.6",
-    "@types/jasmine": "~2.8.8",
-    "@types/jasminewd2": "~2.0.3",
+    "@types/jasmine": "~4.3.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.2",
     "jasmine-core": "~3.8.0",
@@ -80,7 +82,7 @@
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.1.3",
-    "typescript": "~4.9.5"
+    "typescript": "~5.0.2"
   },
   "description": "Comunicate",
   "cordova": {
@@ -93,7 +95,9 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "29.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-camera": {},
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
       "cordova-sqlite-storage": {},
       "cordova-plugin-photo-library": {
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "To choose photos"
